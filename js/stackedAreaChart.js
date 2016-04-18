@@ -11,8 +11,6 @@ StackedAreaChart = function(_parentElement, _data){
 	this.data = _data;
 	this.displayData = []; // see data wrangling
 	this.stackedData = [];
-	// DEBUG RAW DATA
-	console.log(this.data);
 
 	this.initVis();
 }
