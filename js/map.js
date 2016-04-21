@@ -27,6 +27,10 @@ function Map() {
 		}
 		vis.map.on("moveend", update); // used moveend instead of move to minimize the number of times filtering the data
 
+		// filter dataset based on which plants are in the current view
+		var bounds = vis.map.getBounds();
+		plants.filterLocation([bounds._southWest.lat, bounds._northEast.lat], [bounds._southWest.lng, bounds._northEast.lng]);
+
 		// create a legend
 		vis.createLegend();
 
@@ -68,7 +72,7 @@ function Map() {
 	            d3.select("#addr_info").html(plant.city + ", " + plant.state);
 	            d3.select("#tech_type").html(d.plant_type);
 	            d3.select("#inst_cap").html(d3.format("0,000")(Math.round(d.capacity * 10) / 10) + " MW");
-	            d3.select("#gen_commenced").html("CHANGE THIS");
+	            d3.select("#gen_commenced").html("50");
 
 	            // create plant-specific chart
 	            var data = plants.getUnfilteredPlants().filter(function(p){

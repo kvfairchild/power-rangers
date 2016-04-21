@@ -29,6 +29,16 @@ function PlantTypeChart() {
 			.append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+		// tooltip
+		vis.tip = d3.tip()
+			.attr('class', 'd3-tip')
+			.offset([-10, 0])
+			.html(function(d) {
+				return d.value;
+			});
+
+		vis.svg.call(vis.tip);
+
 		// create scales
 		var plant_types = Object.keys(PLANT_COLORS);
 
@@ -95,15 +105,17 @@ function PlantTypeChart() {
 			.attr("fill", function(d) { return PLANT_COLORS[d.key]; })
 			.attr("opacity", 0.75)
 			.attr("y", function(d) { return vis.yScale(d.key); })
-			.on("mouseover", function() {
+			.on("mouseover", function(d) {
 				d3.select(this)
 					.attr("opacity", COLOR_OPACITY)
 					.style({ cursor: "pointer" });
+				// vis.tip.show(d);
 			})
-			.on("mouseout", function() {
+			.on("mouseout", function(d) {
 				d3.select(this)
 					.attr("opacity", COLOR_OPACITY + 0.25)
 					.style({ cursor: "auto" });
+				// vis.tip.hide(d);
 			})
 			.on("click", function() {
 				// toggle between displaying plants of this type and not displaying plants of this type

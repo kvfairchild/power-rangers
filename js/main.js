@@ -39,6 +39,7 @@ queue()
     	plants = new PowerPlants(annual_data, plant_info);
     	plants.filterYear(2009);
 
+    	// the map must be the first visualizaiton created because its initial bounds will filter the other dimensions
     	map = new Map;
 		map.initVis();
 
@@ -65,11 +66,11 @@ function updateAllVis(chart) {
 // html element filters
 
 $("#size-by").change(function() {
-    // console.log(this.value);
-});
-
-/*
-$("#selBalance").change(function() {
     console.log(this.value);
 });
-*/
+
+$("#selState").change(function() {
+	console.log(this.value);
+    plants.filterState(this.value);
+    updateAllVis("all");
+});

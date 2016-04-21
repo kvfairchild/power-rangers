@@ -1,9 +1,18 @@
 // controls filtering of the dataset
 function PowerPlants(annual_data, plant_info) {
+	var pp = this; // needed to reference "this" within certain scopes
+
+	// **********************************
+	// data
 	this.data = annual_data;
 	this.annual_data = crossfilter(annual_data);
 	this.plant_info = plant_info;
 
+	// **********************************
+	// helpful variables
+	this.plant_types = Object.keys(PLANT_COLORS);
+
+	// **********************************
 	// create dimensions
 	this.year = this.annual_data.dimension(function (d) {
 	    return d.year;
@@ -17,29 +26,61 @@ function PowerPlants(annual_data, plant_info) {
 		return d.capacity;
 	});
 
-	// latitude
 	this.lat = this.annual_data.dimension(function (d) {
-		return d.lat;
+		return d.lat; // latitude
 	});
 
-	// longitude
 	this.long = this.annual_data.dimension(function (d) {
-		return d.long;
+		return d.long; // longitude
 	});
 
+	this.state = this.annual_data.dimension(function (d) {
+		return d.state; // state or District of Columbia
+	});
+
+	// **********************************
 	// create groups
 
 	// sum capacity by plant type
 	this.capacity_by_type = this.plant_type.group().reduce(
 		// https://github.com/square/crossfilter/wiki/API-Reference#group_reduce
-		function(p, v) {
+		function(p, v) { // reduceAdd
 			return p + v["capacity"];
 		},
-		function(p, v) {
+		function(p, v) { // reduceRemove
 			return p - v["capacity"];
 		},
 		function() { // reduceInitial
 			return 0;
+		}
+	);
+
+	// sum capacity by plant type and year
+	this.capacity_by_year_type = this.year.group().reduce(
+		// http://stackoverflow.com/a/28014830
+		function(p, v) {
+			for(var i = 0; i < pp.plant_types.length; i++) {
+				var type = pp.plant_types[i];
+				p[type] += v["capacity"] * (v["plant_type"] == type);
+			}
+		    return p;
+		},
+		function(p, v) {
+			for(var i = 0; i < pp.plant_types.length; i++) {
+				var type = pp.plant_types[i];
+				p[type] -= v["capacity"] * (v["plant_type"] == type);
+			}
+			return p;
+		},
+		function() {
+			// array of plant_type: attribute_sum
+			var cap_by_type = {};
+
+			for(var i = 0; i < pp.plant_types.length; i++) {
+				cap_by_type[pp.plant_types[i]] = 0;
+			}
+
+			return cap_by_type;
 		}
 	);
 
@@ -50,6 +91,15 @@ function PowerPlants(annual_data, plant_info) {
 	// get capacity by fuel type
 	this.getCapacityByType = function() {
 		return this.capacity_by_type.all();
+	}
+
+	// get capacity by fuel type for each year
+	this.getCapacityByYearType = function() {
+		return this.capacity_by_year_type.all();
+	}
+
+	this.getAttributeByYearType = function() {
+		return this.getCapacityByYearType();
 	}
 
 	// get count of power plants for each capacity value
@@ -95,6 +145,17 @@ function PowerPlants(annual_data, plant_info) {
 	this.filterLocation = function(lats, longs) {
 		this.lat.filterRange(lats);
 		this.long.filterRange(longs);
+	}
+
+	this.filterState = function(selected_state) {
+		if(selected_state === "all") {
+			console.log("all");
+			this.state.filter(null); // clear filter
+		}
+		else {
+			console.log("not all")
+			this.state.filterExact(selected_state);
+		}
 	}
 
 }
