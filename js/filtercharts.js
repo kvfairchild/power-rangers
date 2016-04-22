@@ -195,8 +195,8 @@ function PlantsDistributionChart() {
 
 		// create svg area
 		vis.margin = { top: 10, right: 10, bottom: 20, left: 10 };
-		vis.width = 450 - vis.margin.left - vis.margin.right,
-		vis.height = 75 - vis.margin.top - vis.margin.bottom;
+		vis.width = parseInt(d3.select('#capacity').style('width'), 10) - vis.margin.left - vis.margin.right;
+		vis.height = 60 - vis.margin.top - vis.margin.bottom;
 
 		vis.svg = d3.select("#capacity").append("svg")
 		    .attr("width", vis.width + vis.margin.left + vis.margin.right)
@@ -380,8 +380,6 @@ function PlantsDistributionChart() {
 		    .extent(vis.brush.extent());
 
   		vis.brushVisual
-			.transition()
-			.duration(DURATION_LENGTH)
 			.call(vis.brush);
 	}
 
