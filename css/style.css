@@ -1,25 +1,11 @@
-body {padding:0; margin:0; font-family: Tahoma, Geneva, sans-serif; font-size: 12px;}
+/* ======================================== */
+/* general */
 
-
-
-#logo-div {
-  padding-top: 10px;
-  position: relative;
-}
-
-#logo-div img {
-  float: left;
-}
-
-#logo-div span {
-
-}
-
-#logo-div a {
-  font-family:Geneva,'Century Gothic',Arial,Verdana,Helvetica,sans-serif;
-  font-size: 16px;
-  color: #882E3C;
-  text-decoration: none;
+body {
+	padding:0; 
+	margin:0; 
+	font-family: Tahoma, Geneva, sans-serif; 
+	font-size: 12px;
 }
 
 h1 {
@@ -45,132 +31,134 @@ p a:hover {
   text-decoration: underline;
 }
 
-.results-circle {
-  fill-opacity:1;
-  fill:black;
-  box-shadow: 0px 0px 20px rgba(0,0,0,.8);
+.first-col {
+  padding-right: 6px;
 }
-
-    /*#map {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 60%;
-      height: 100%;
-      padding: 0;
-      margin: 0;
-      cursor:default;
-    }*/
-    #tooltip {
-		text-align:center;
-		padding: 10px;
-		border: solid 1px gray;
-		border-radius: 10px;
-		-moz-box-shadow: inset 0 0 10px #000000;
-		-webkit-box-shadow: inset 0 0 10px #000000;
-		box-shadow: inset 0 0 10px #000000;
-    }
-
-    #legend {
-		position: absolute;
-		width: 360px;
-		margin-right: 10px;
-		left: 30px;
-		top:350px;
-		z-index: 1;	  
-    }
-    
-    #legend-svg-holder {
-        height: 90px;
-        margin-top: 5px;
-        margin-left: -5px;
-    }
-
-    circle, size-circle {
-      fill-opacity: .7;
-      stroke: #000;
-      stroke-opacity: .7;
-      stroke-width: 1px;
-    }
-    .size-circle {
-      fill: #ddd;
-    }
-
-    .point:hover {
-      stroke-width: 2.4px;
-    }
-
-    circle.inactive {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    #site-name-row {
-      margin-top: 5px;
-      margin-bottom:0;
-      padding-bottom:0;
-    }
-    .first-col {
-      padding-right: 6px;
-    }
-    
-    rect {
-      cursor: pointer;
-    }
 	
 .row {
     margin-right: 0px;
     margin-left: 0px;
 }
 
-#range_03, #range_02
-{
-	display:none;
-}
-#controls .row
-{
+#controls .row {
 	padding: 10px 0px;
 }
-#controls .form-control {
-    display: initial;
-    width: 70%;
+
+/* ======================================== */
+/* plant-specific area */
+
+#tooltip {
+	text-align:center;
+	padding: 10px;
+	border: solid 1px gray;
+	border-radius: 10px;
+	-moz-box-shadow: inset 0 0 2px #000000;
+	-webkit-box-shadow: inset 0 0 2px #000000;
+	box-shadow: inset 0 0 2px #000000;
 }
 
-.axis path,
-.axis line {
-  fill: none;
+#tooltip .line{
+	fill: none;
+	stroke: blue;
+	stroke-width: 2px;
+}
+
+/* ======================================== */
+/* map */
+
+#map circle {
   stroke: #000;
-  shape-rendering: crispEdges;
+  stroke-opacity: 0.5;
+  stroke-width: 1px;
+}
+
+circle.size {
+	fill: #ddd;
+}
+
+#site-name-row {
+  margin-top: 5px;
+  margin-bottom:0;
+  padding-bottom:0;
+}
+
+/* ======================================== */
+/* legend */
+
+#legend text {
+	alignment-baseline: middle;
+	font-size: 14px;
+}
+
+#legend text. {
+	text-anchor: start;
+}
+
+#legend text.size-text {
+	text-anchor: middle;
+}
+
+/* ======================================== */
+/* chart components */
+
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
 }
 
 .browser text {
-  text-anchor: end;
+	text-anchor: end;
 }
 
 .area {
-  opacity: 0.7;
-  clip-path: url(#clip);
+	opacity: 0.7;
+	clip-path: url(#clip);
 }
+
 .area:hover {
-  opacity: 1;
+	opacity: 1;
 }
 
-.axis path,
-.axis line{
-fill: none;
-stroke: black;
-}
-
-.line{
-fill: none;
-stroke: blue;
-stroke-width: 2px;
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
 }
 
 .tick text{
-font-size: 12px;
+	font-size: 12px;
 }
 
 .tick line{
-opacity: 0.2;
+	opacity: 0.2;
 }
+
+/* ======================================== */
+/* brush */
+
+.resize path {
+	fill: #000;
+	/* fill-opacity: .8;
+	stroke: #fff; 
+	stroke-opacity: 0.75; 
+	stroke-width: 1px; */
+}
+
+.brush .extent {
+	fill-opacity: .125;
+	shape-rendering: crispEdges;
+}
+
+#year-chart .slider {
+	cursor: ew-resize;
+}
+
+/*
+.selecting rect.selected {
+	fill: red;
+} 
+changes color of selected plants for the capacity brush */

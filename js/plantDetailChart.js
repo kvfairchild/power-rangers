@@ -8,11 +8,12 @@ function detail_draw(datas)
         detail_h = 180 - detail_m.top - detail_m.bottom;
 
     var detail_xScale = d3.scale.linear()
-        .domain([0, d3.max(datas, function(d){ return d.x; })])
-        .range([0, detail_w]);
+        .domain(d3.extent(datas, function(d){ return d.year; }))
+        .range([0, detail_w])
+        .nice();
 
     var detail_yScale = d3.scale.linear()
-        .domain([0, d3.max(datas, function(d){ return d.y; })])
+        .domain([0, d3.max(datas, function(d){ return d.generation; })])
         .range([detail_h, 0]);
 
     var detail_xAxis = d3.svg.axis()
@@ -31,8 +32,8 @@ function detail_draw(datas)
         .tickPadding(10);
 
     var detail_line = d3.svg.line()
-        .x(function(d) { return detail_xScale(d.x); })
-        .y(function(d) { return detail_yScale(d.y); });
+        .x(function(d) { return detail_xScale(d.year); })
+        .y(function(d) { return detail_yScale(d.generation); });
 
     var svgDetail = d3.select("#tooltip-chart").append("svg")
         .attr("width", detail_w + detail_m.left + detail_m.right)
