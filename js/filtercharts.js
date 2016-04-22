@@ -80,7 +80,7 @@ function PlantTypeChart() {
 		var vis = this;
 
 		// sum for each plant type
-		vis.data = plants.getCapacityByType();
+		vis.data = plants.getAttributeTotalByType();
 
 		// update scale and axis based on capacity
 		vis.xScale
@@ -305,7 +305,15 @@ function PlantsDistributionChart() {
 			.nice();
 
 		// update axis
-		vis.displayAxis();
+		vis.xAxis = d3.svg.axis()
+    		.scale(vis.xScale)
+    		.orient("bottom")
+    		.ticks(5);
+
+  		vis.xAxisVisual
+			.transition()
+			.duration(DURATION_LENGTH)
+			.call(vis.xAxis);
 
 		// enter, update, exit bars
 		vis.bars = vis.barsVisual.selectAll(".bar")
@@ -367,7 +375,14 @@ function PlantsDistributionChart() {
 		d3.select(vis.svg.node().parentNode) // svg element
 	        .style('width', (vis.width + vis.margin.left + vis.margin.right) + 'px');
 
-	    vis.displayAxis();
+	    // redraw axis
+	    vis.xAxis = d3.svg.axis()
+    		.scale(vis.xScale)
+    		.orient("bottom")
+    		.ticks(5);
+
+  		vis.xAxisVisual
+			.call(vis.xAxis);
 
 		vis.bars
 			.attr("x", function(d) {
@@ -383,18 +398,6 @@ function PlantsDistributionChart() {
 			.call(vis.brush);
 	}
 
-	// helper funciton to display the x axis after its range or domain was updated
-	this.displayAxis = function() {
-		var vis = this;
-
-		vis.xAxis = d3.svg.axis()
-    		.scale(vis.xScale)
-    		.orient("bottom")
-    		.ticks(5);
-
-  		vis.xAxisVisual
-			.call(vis.xAxis);
-	}
 }
 
 // stacked area chart

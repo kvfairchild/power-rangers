@@ -54,6 +54,8 @@ queue()
 	});
 
 // ***************************************
+// allow visualizations to be updated and resized
+
 // update all visualizations when the data changes
 // "chart" specifies which chart is causing the change (and thus shouldn't be updated)
 function updateAllVis(chart) {
@@ -62,6 +64,7 @@ function updateAllVis(chart) {
 	if(chart != "map") { map.updateVis(); }
 }
 
+// resize all visualizations when the window is resized
 function resizeAllVis() {
 	plant_type_chart.resizeVis();
 	capacity_chart.resizeVis();
@@ -73,11 +76,11 @@ d3.select(window).on('resize', resizeAllVis);
 // html element filters
 
 $("#size-by").change(function() {
-    console.log(this.value);
+    plants.setAttribute(this.value);
+    updateAllVis("all");
 });
 
 $("#selState").change(function() {
-	console.log(this.value);
     plants.filterState(this.value);
     updateAllVis("all");
 });
