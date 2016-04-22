@@ -19,22 +19,30 @@ function PlantTypeChart() {
 		}
 
 		// create chart area
-		var margin = {top: 20, right: 20, bottom: 30, left: 40};
-    	vis.width = 450 - margin.left - margin.right;
-    	vis.height = 300 - margin.top - margin.bottom;
+		vis.margin = {top: 20, right: 40, bottom: 30, left: 50};
+    	vis.width = parseInt(d3.select('#plant-type').style('width'), 10) - vis.margin.left - vis.margin.right;
+    	vis.height = 300 - vis.margin.top - vis.margin.bottom;
 
 		vis.svg = d3.select("#plant-type").append("svg")
-			.attr("width", vis.width + margin.left + margin.right)
-			.attr("height", vis.height + margin.top + margin.bottom)
+			.attr("width", vis.width + vis.margin.left + vis.margin.right)
+			.attr("height", vis.height + vis.margin.top + vis.margin.bottom)
 			.append("g")
-				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+				.attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
 		// tooltip
 		vis.tip = d3.tip()
 			.attr('class', 'd3-tip')
-			.offset([-10, 0])
+			.offset([0, 10])
+			.direction("e")
 			.html(function(d) {
-				return d.value;
+				var value = d.value;
+				if(value < 50) {
+					value = Math.round(value * 10) / 10;
+				}
+				else {
+					value = Math.round(value);
+				}
+				return d3.format("0,000")(value);
 			});
 
 		vis.svg.call(vis.tip);
@@ -72,11 +80,11 @@ function PlantTypeChart() {
 		var vis = this;
 
 		// sum for each plant type
-		var capacity_by_type = plants.getCapacityByType();
+		vis.data = plants.getCapacityByType();
 
 		// update scale and axis based on capacity
 		vis.xScale
-			.domain([0, d3.max(capacity_by_type, function(d) { return d.value; })]) // CHANGE
+			.domain([0, Math.max(10, d3.max(vis.data, function(d) { return d.value; }))]) // no less than 10 MW or else the scale can have odd behavior when no plants are selected
 			.nice();
 
 		vis.xAxis = d3.svg.axis()
@@ -93,10 +101,10 @@ function PlantTypeChart() {
 			.call(vis.yAxis)
 
 		// enter, update bars
-		var bars = vis.svg.selectAll(".bar")
-			.data(capacity_by_type, function(d) { return d.key; }); // keep track of data based on plant type
+		vis.bars = vis.svg.selectAll(".bar")
+			.data(vis.data, function(d) { return d.key; }); // keep track of data based on plant type
 
-		bars
+		vis.bars
 			.enter()
 			.append("rect")
 			.attr("class", "bar")
@@ -107,15 +115,15 @@ function PlantTypeChart() {
 			.attr("y", function(d) { return vis.yScale(d.key); })
 			.on("mouseover", function(d) {
 				d3.select(this)
-					.attr("opacity", COLOR_OPACITY)
+					.attr("opacity", COLOR_OPACITY + 0.25)
 					.style({ cursor: "pointer" });
-				// vis.tip.show(d);
+				vis.tip.show(d);
 			})
 			.on("mouseout", function(d) {
 				d3.select(this)
-					.attr("opacity", COLOR_OPACITY + 0.25)
+					.attr("opacity", COLOR_OPACITY)
 					.style({ cursor: "auto" });
-				// vis.tip.hide(d);
+				vis.tip.hide(d);
 			})
 			.on("click", function() {
 				// toggle between displaying plants of this type and not displaying plants of this type
@@ -137,21 +145,48 @@ function PlantTypeChart() {
 				updateAllVis("plant_type");
 			});
 
-		bars
+		vis.bars
 			.transition()
 			.duration(DURATION_LENGTH)
 			.attr("width", function(d) { 
 				if(d.value < 0) { d.value = 0; } // corrects bug: d.value can be very small and negative (e.g. e-10)
 				return vis.xScale(d.value); 
 			});
-
 	}
+
+	this.resizeVis = function() {
+		var vis = this;
+
+		// resize based on width of container
+		// http://eyeseast.github.io/visible-data/2013/08/28/responsive-charts-with-d3/
+		vis.width = parseInt(d3.select('#plant-type').style('width'), 10) - vis.margin.left - vis.margin.right;
+		vis.xScale
+			.range([0, vis.width]);
+
+		d3.select(vis.svg.node().parentNode) // svg element
+	        .style('width', (vis.width + vis.margin.left + vis.margin.right) + 'px');
+
+	    vis.xAxis = d3.svg.axis()
+    		.scale(vis.xScale)
+    		.orient("bottom")
+    		.ticks(5);
+
+  		vis.xAxisVisual
+			.call(vis.xAxis);
+
+		vis.bars
+			.attr("width", function(d) { 
+				if(d.value < 0) { d.value = 0; } // corrects bug: d.value can be very small and negative (e.g. e-10)
+				return vis.xScale(d.value); 
+			});
+	}
+
 }
 
 // 1-dimensional scatterplot
 // one line for each power plant
 // power plant lines placed based on capacity value
-function AttributeChart() {
+function PlantsDistributionChart() {
 	this.initVis = function() {
 		var vis = this;
 
@@ -159,15 +194,15 @@ function AttributeChart() {
 		var capacities = plants.getCapacityValues();
 
 		// create svg area
-		var margin = { top: 10, right: 50, bottom: 20, left: 70 };
-		vis.width = 450 - margin.left - margin.right,
-		vis.height = 100 - margin.top - margin.bottom;
+		vis.margin = { top: 10, right: 10, bottom: 20, left: 10 };
+		vis.width = 450 - vis.margin.left - vis.margin.right,
+		vis.height = 75 - vis.margin.top - vis.margin.bottom;
 
 		vis.svg = d3.select("#capacity").append("svg")
-		    .attr("width", vis.width + margin.left + margin.right)
-		    .attr("height", vis.height + margin.top + margin.bottom)
+		    .attr("width", vis.width + vis.margin.left + vis.margin.right)
+		    .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
 			.append("g")
-		    	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		    	.attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
 		// create placeholder for the bars
 		vis.barsVisual = vis.svg.append("g")
@@ -205,12 +240,21 @@ function AttributeChart() {
 		    .attr("class", "brush")
 		    .call(vis.brush);
 
-		vis.brushVisual.selectAll(".resize").append("path")
-		    .attr("transform", "translate(0," +  vis.height / 2 + ")")
-		    .attr("d", arc);
-
 		vis.brushVisual.selectAll("rect")
-		    .attr("height", vis.height); 
+        	.attr("height", vis.height);
+
+		vis.brushVisual.selectAll(".resize")
+        	.append("path")
+        	.attr("d", function(d) {
+				// style the brush resize handles
+				// based on https://github.com/nyquist212/CMSMSPB
+				// modified based on http://stackoverflow.com/a/32875327
+				var e = +(d == "e");
+				var x = e ? 1 : -1;
+				var y = vis.height;
+
+				return "M" + (.5 * x) + "," + 0 + "A6,6 0 0 " + e + " " + (6.5 * x) + "," + (0 + 6) + "V" + (y - 6) + "A6,6 0 0 " + e + " " + (.5 * x) + "," + y + "Z";
+        	});
 
 		brushstart();
 		brushmove();
@@ -261,15 +305,7 @@ function AttributeChart() {
 			.nice();
 
 		// update axis
-		vis.xAxis = d3.svg.axis()
-    		.scale(vis.xScale)
-    		.orient("bottom")
-    		.ticks(5);
-
-  		vis.xAxisVisual
-			.transition()
-			.duration(DURATION_LENGTH)
-			.call(vis.xAxis);
+		vis.displayAxis();
 
 		// enter, update, exit bars
 		vis.bars = vis.barsVisual.selectAll(".bar")
@@ -317,6 +353,49 @@ function AttributeChart() {
 			.transition()
 			.duration(DURATION_LENGTH)
 			.call(vis.brush);
+	}
+
+	this.resizeVis = function() { // change all of this
+		var vis = this;
+
+		// resize based on width of container
+		// http://eyeseast.github.io/visible-data/2013/08/28/responsive-charts-with-d3/
+		vis.width = parseInt(d3.select('#capacity').style('width'), 10) - vis.margin.left - vis.margin.right;
+		vis.xScale
+			.range([0, vis.width]);
+
+		d3.select(vis.svg.node().parentNode) // svg element
+	        .style('width', (vis.width + vis.margin.left + vis.margin.right) + 'px');
+
+	    vis.displayAxis();
+
+		vis.bars
+			.attr("x", function(d) {
+				return vis.xScale(d.key); 
+			});
+
+		// update brush
+		vis.brush
+		    .x(vis.xScale)
+		    .extent(vis.brush.extent());
+
+  		vis.brushVisual
+			.transition()
+			.duration(DURATION_LENGTH)
+			.call(vis.brush);
+	}
+
+	// helper funciton to display the x axis after its range or domain was updated
+	this.displayAxis = function() {
+		var vis = this;
+
+		vis.xAxis = d3.svg.axis()
+    		.scale(vis.xScale)
+    		.orient("bottom")
+    		.ticks(5);
+
+  		vis.xAxisVisual
+			.call(vis.xAxis);
 	}
 }
 

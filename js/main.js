@@ -25,7 +25,7 @@ var COLOR_OPACITY = 0.75;
 var plants;
 var map;
 var plant_type_chart;
-var attribute_chart;
+var capacity_chart;
 var year_chart;
 
 // ***************************************
@@ -46,8 +46,8 @@ queue()
 		plant_type_chart = new PlantTypeChart;
 		plant_type_chart.initVis();
 
-		attribute_chart = new AttributeChart;
-		attribute_chart.initVis();
+		capacity_chart = new PlantsDistributionChart;
+		capacity_chart.initVis();
 
 		year_chart = new YearChart;
 		year_chart.initVis();
@@ -57,10 +57,17 @@ queue()
 // update all visualizations when the data changes
 // "chart" specifies which chart is causing the change (and thus shouldn't be updated)
 function updateAllVis(chart) {
-	if(chart != "capacity") { attribute_chart.updateVis(); }
+	if(chart != "capacity") { capacity_chart.updateVis(); }
 	if(chart != "plant_type") { plant_type_chart.updateVis(); }
 	if(chart != "map") { map.updateVis(); }
 }
+
+function resizeAllVis() {
+	plant_type_chart.resizeVis();
+	capacity_chart.resizeVis();
+}
+
+d3.select(window).on('resize', resizeAllVis); 
 
 // ***************************************
 // html element filters
