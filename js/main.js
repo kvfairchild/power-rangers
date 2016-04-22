@@ -5,16 +5,16 @@
 var DURATION_LENGTH = 800;
 
 // colors of the different types of plants
-// http://colorbrewer2.org/?type=qualitative&scheme=Set1&n=8
+// http://colorbrewer2.org/
 var PLANT_COLORS = {
-	"Coal": "#a65628", // "brown",
-	"Gas": "#e41a1c", // "red",
-	"Solar": "gold",
-	"Other": "#ff7f00", // "orange",
-	"Oil": "black",
-	"Nuclear": "#984ea3", // "purple",
-	"Hydro": "blue",
-	"Wind": "green"
+	"Coal": "#a6cee3", // "lt blue",
+	"Gas": "#b2df8a", // "lt green",
+	"Solar": "#ffff99", // "lt yellow",
+	"Other": "#e31a1c", // "red",
+	"Oil": "#ff7f00", // "orange",
+	"Nuclear": "#fb9a99", // "pink",
+	"Hydro": "#1f78b4", // "dk blue",
+	"Wind": "darkgreen" // "dk green"
 }
 
 // opacity used for plant circles / bars / etc
@@ -54,6 +54,8 @@ queue()
 	});
 
 // ***************************************
+// allow visualizations to be updated and resized
+
 // update all visualizations when the data changes
 // "chart" specifies which chart is causing the change (and thus shouldn't be updated)
 function updateAllVis(chart) {
@@ -62,6 +64,7 @@ function updateAllVis(chart) {
 	if(chart != "map") { map.updateVis(); }
 }
 
+// resize all visualizations when the window is resized
 function resizeAllVis() {
 	plant_type_chart.resizeVis();
 	capacity_chart.resizeVis();
@@ -73,11 +76,11 @@ d3.select(window).on('resize', resizeAllVis);
 // html element filters
 
 $("#size-by").change(function() {
-    console.log(this.value);
+    plants.setAttribute(this.value);
+    updateAllVis("all");
 });
 
 $("#selState").change(function() {
-	console.log(this.value);
     plants.filterState(this.value);
     updateAllVis("all");
 });

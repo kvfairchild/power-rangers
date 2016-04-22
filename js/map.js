@@ -6,7 +6,7 @@ function Map() {
 		// create Leaflet map
 		vis.map = L.map('map').setView([37.0902, -95.7129], 4);
 		L.tileLayer(
-		    'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+			'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
 		    {
 		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 		        //minZoom: 5,

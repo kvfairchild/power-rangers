@@ -11,6 +11,7 @@ function PowerPlants(annual_data, plant_info) {
 	// **********************************
 	// helpful variables
 	this.plant_types = Object.keys(PLANT_COLORS);
+	this.attribute = "capacity"; // capacity, generation, or co2_emissions
 
 	// **********************************
 	// create dimensions
@@ -41,17 +42,23 @@ function PowerPlants(annual_data, plant_info) {
 	// **********************************
 	// create groups
 
-	// sum capacity by plant type
-	this.capacity_by_type = this.plant_type.group().reduce(
+	// sum attributes by plant type
+	this.attribute_total_by_type = this.plant_type.group().reduce(
 		// https://github.com/square/crossfilter/wiki/API-Reference#group_reduce
 		function(p, v) { // reduceAdd
-			return p + v["capacity"];
+			p["capacity"] += v["capacity"];
+			p["generation"] += v["generation"];
+			p["co2_emissions"] += v["co2_emissions"];
+			return p;
 		},
 		function(p, v) { // reduceRemove
-			return p - v["capacity"];
+			p["capacity"] -= v["capacity"];
+			p["generation"] -= v["generation"];
+			p["co2_emissions"] -= v["co2_emissions"];
+			return p;
 		},
 		function() { // reduceInitial
-			return 0;
+			return { "capacity": 0, "generation": 0, "co2_emissions": 0 };
 		}
 	);
 
@@ -86,11 +93,31 @@ function PowerPlants(annual_data, plant_info) {
 
 	this.capacities = this.capacity.group();
 
-	// return functions
+	// **********************************
+	// set functions
+	this.setAttribute = function(selected_attribute) {
+		this.attribute = selected_attribute;
+	}
 
-	// get capacity by fuel type
-	this.getCapacityByType = function() {
-		return this.capacity_by_type.all();
+	// **********************************
+	// get functions
+
+	this.getAttribute = function() {
+		return this.attribute;
+	}
+
+	// get attribute total by fuel type
+	this.getAttributeTotalByType = function() {
+		var totals_by_type =  this.attribute_total_by_type.all();
+		
+		// reduce down to only the currently selected attribute
+		var return_data = [];
+		for(var i = 0; i < totals_by_type.length; i++) {
+			var type = {"key": totals_by_type[i]["key"], "value": totals_by_type[i]["value"][pp.attribute]};
+			return_data.push(type);
+		}
+
+		return return_data;
 	}
 
 	// get capacity by fuel type for each year
@@ -122,6 +149,7 @@ function PowerPlants(annual_data, plant_info) {
 		return this.data;
 	}
 
+	// **********************************
 	// filter functions
 
 	// filter plants by capacity range
@@ -147,13 +175,12 @@ function PowerPlants(annual_data, plant_info) {
 		this.long.filterRange(longs);
 	}
 
+	// filter by state of the US
 	this.filterState = function(selected_state) {
 		if(selected_state === "all") {
-			console.log("all");
 			this.state.filter(null); // clear filter
 		}
 		else {
-			console.log("not all")
 			this.state.filterExact(selected_state);
 		}
 	}
