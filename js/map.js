@@ -6,7 +6,7 @@ function Map() {
 		// create Leaflet map
 		vis.map = L.map('map').setView([37.0902, -95.7129], 4);
 		L.tileLayer(
-		    'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+			'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
 		    {
 		        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 		        //minZoom: 5,
@@ -32,7 +32,7 @@ function Map() {
 		plants.filterLocation([bounds._southWest.lat, bounds._northEast.lat], [bounds._southWest.lng, bounds._northEast.lng]);
 
 		// create a legend
-		vis.createLegend();
+		/* vis.createLegend(); */
 
 		// update the power plants and the legend
 		vis.updateVis();
@@ -63,13 +63,19 @@ function Map() {
 	        .attr("fill", function(d) { return PLANT_COLORS[d.plant_type]})
 	        .attr("opacity", 0.625)
 	        .on("mouseover", function(d) {
+				d3.select("#intro-div")
+					.attr("hidden", true);
+				d3.select("#details-table")
+					.attr("hidden", null);
+				d3.select("#tooltip-h3")
+					.attr("hidden", null);
 	        	d3.select(this)
 					.attr("opacity", 1);
 
 	        	// update plant-specific information
 				var plant = plants.getPlant(d.plant_id);
 	            d3.select("#plant_name").html(plant.name);
-	            d3.select("#addr_info").html(plant.city + ", " + plant.state);
+	            d3.select("#addr_info").html(plant.city + ", " + d.state);
 	            d3.select("#tech_type").html(d.plant_type);
 	            d3.select("#inst_cap").html(d3.format("0,000")(Math.round(d.capacity * 10) / 10) + " MW");
 	            d3.select("#gen_commenced").html("50");
@@ -80,7 +86,14 @@ function Map() {
 				});
 	            detail_draw(data);
 	        })
+
 	        .on("mouseout", function(d) {
+				d3.select("#intro-div")
+					.attr("hidden", null);
+				d3.select("#details-table")
+					.attr("hidden", true);
+				d3.select("#tooltip-h3")
+					.attr("hidden", true);
 	        	d3.select(this)
 					.attr("opacity", 0.75);
 
@@ -108,7 +121,7 @@ function Map() {
 				return vis.getCircleSize(d.capacity); });
 		
 	    // update legend
-	    vis.updateLegend();
+	 /*   vis.updateLegend(); */
     }
 
     this.createLegend = function() {
@@ -141,21 +154,6 @@ function Map() {
 	        .attr("r", 10)
 	        .attr("fill", function(d) {
 	        	return PLANT_COLORS[d]; });
-
-	    // create text for power plant types
-	    var type_text = vis.legend.selectAll("text")
-	        .data(vis.plant_types);
-
-	    type_text
-	        .enter()
-	        .append("text")
-	        .attr("x",function(d,i) {
-	            return i * 80 + 50;
-	        })
-	        .attr("y", function(d,i) {
-	            return 40;
-	        })
-	        .text(function(d) { return d; });
 
 	    // create circles for power plant sizes
 	    var size_circles = vis.legend.selectAll(".size")

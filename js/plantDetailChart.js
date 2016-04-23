@@ -3,9 +3,9 @@ function detail_draw(datas)
 
     d3.select("#tooltip-chart").selectAll("*").remove();
 
-    var detail_m = {top: 10, right: 50, bottom: 50, left: 150},
+    var detail_m = {top: 10, right: 50, bottom: 60, left: 150},
         detail_w = $("#tooltip-chart").width() - detail_m.left - detail_m.right,
-        detail_h = 180 - detail_m.top - detail_m.bottom;
+        detail_h = 200 - detail_m.top - detail_m.bottom;
 
     var detail_xScale = d3.scale.linear()
         .domain(d3.extent(datas, function(d){ return d.year; }))

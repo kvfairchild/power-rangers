@@ -105,16 +105,26 @@
 			</div>
 			<div class="row" style="padding:10px;">
 				<div id='tooltip' style="height:200px;">
-					<h1 id="plant_name"></h1>
+					<div id = "intro-div">
+						<h1>Welcome to the Power Plant Explorer!</h1>
+						<br>
+						<p>Each circle represents a power plant.</p>
+						<p><b>Hover</b> over a circle to learn more about a specific plant.</p>
+						<p>Select options from the dashboard on the left to <b>filter</b>.</p>
+						<p><b>Zoom</b> in or out with the arrows in the top left corner of the map</p>
+					</div>
 					<div class="row">
 						<div id='tooltip-data' class="col-md-6">
-							<table id='details-table'>
+							<table id='details-table' hidden>
+								<div id = "plant-color"></div>
+								<h1 id="plant_name"></h1> <br>
 								<tr><td class='first-col'>Address</td><td id="addr_info"></td></tr>
 								<tr><td class='first-col'>Technology type</td><td id="tech_type"></td></tr>
 								<tr><td class='first-col'>Capacity </td><td id="inst_cap"></td></tr>
 								<tr><td class='first-col'>Generation </td><td id="gen_commenced"></td></tr>
 							</table>
 						</div>
+						<h3 id = "tooltip-h3" hidden> Generation over time </h3>
 						<div id='tooltip-chart' class="col-md-6">
 						</div>
 					</div>
