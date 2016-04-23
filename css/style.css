@@ -9,10 +9,11 @@ body {
 }
 
 h1 {
-  font-size:143%;
+  font-size:160%;
   margin-top:4px;
   padding-bottom:0;
    margin-bottom:8px;
+	text-align: center;
 }
 
 h3 {
@@ -21,6 +22,10 @@ h3 {
    padding-bottom:0;
    margin-top:0;
    margin-bottom:0;
+}
+
+p {
+	font-size: 14px;
 }
 
 p a:link, p a:visited {
@@ -46,6 +51,16 @@ p a:hover {
 
 /* ======================================== */
 /* plant-specific area */
+
+
+/* intro div */
+
+#intro-div {
+	height: 180px;
+	margin-top: -5px;
+}
+
+/* plant details */
 
 #tooltip {
 	text-align:center;

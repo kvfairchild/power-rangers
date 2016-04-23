@@ -7,13 +7,13 @@ var DURATION_LENGTH = 800;
 // colors of the different types of plants
 // http://colorbrewer2.org/
 var PLANT_COLORS = {
-	"Coal": "#a6cee3", // "lt blue",
+	"Coal": "#23527c", // "dk blue",
 	"Gas": "#b2df8a", // "lt green",
 	"Solar": "#ffff99", // "lt yellow",
 	"Other": "#e31a1c", // "red",
 	"Oil": "#ff7f00", // "orange",
 	"Nuclear": "#fb9a99", // "pink",
-	"Hydro": "#1f78b4", // "dk blue",
+	"Hydro": "#a6cee3", // "lt blue",
 	"Wind": "darkgreen" // "dk green"
 }
 
@@ -39,7 +39,7 @@ queue()
     	plants = new PowerPlants(annual_data, plant_info);
     	plants.filterYear(2009);
 
-    	// the map must be the first visualizaiton created because its initial bounds will filter the other dimensions
+    	// the map must be the first visualization created because its initial bounds will filter the other dimensions
     	map = new Map;
 		map.initVis();
 

@@ -273,7 +273,7 @@ function PlantsDistributionChart() {
 					return s[0] <= d.key && d.key <= s[1]; 
 				});
 
-			// filter power plants and update other visualizatoins accordingly
+			// filter power plants and update other visualizations accordingly
 			plants.filterCapacity(s);
 			updateAllVis("capacity");
 		}
@@ -400,6 +400,7 @@ function PlantsDistributionChart() {
 
 }
 
+
 // stacked area chart
 // an area for each plant type
 // values for each year
@@ -407,7 +408,10 @@ function YearChart() {
 	this.initVis = function() {
 		var vis = this;
 
-		// http://bl.ocks.org/mbostock/6452972
+		// contains plant attributes by year
+		var data = plants.getAttributeByYearType();
+
+		console.log(data);
 
 		// create chart area
 		var margin = {top: 20, right: 20, bottom: 30, left: 40};
@@ -425,6 +429,9 @@ function YearChart() {
 		    .domain([2009, 2014])
 		    .range([0, vis.width])
 		    .clamp(true);
+
+		vis.yScale = d3.scale.linear()
+			.range([vis.height, 0])
 
 		vis.brush = d3.svg.brush()
 		    .x(vis.xScale)
@@ -444,6 +451,8 @@ function YearChart() {
 			.select(".domain")
 			.select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
 				.attr("class", "halo");
+
+
 
 		vis.slider = vis.svg.append("g")
 			.attr("class", "slider")
@@ -467,7 +476,7 @@ function YearChart() {
 
 			if (d3.event.sourceEvent) { // not a programmatic event
 				year = vis.xScale.invert(d3.mouse(this)[0]);
-				
+
 			}
 
 			vis.handle
@@ -484,7 +493,7 @@ function YearChart() {
 					.attr("cx", vis.xScale(year));
 
 				plants.filterYear(year);
-				updateAllVis("all");		
+				updateAllVis("all");
 			}
 		}
 	}
