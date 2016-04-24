@@ -35,8 +35,8 @@ function PlantTypeChart() {
 			.offset([0, 10])
 			.direction("e")
 			.html(function(d) {
-				var value = d.value;
-				if(value < 50) {
+				var value = d.value / 1000;
+				if(value < .005) {
 					value = Math.round(value * 10) / 10;
 				}
 				else {
@@ -84,7 +84,7 @@ function PlantTypeChart() {
 
 		// update scale and axis based on max attribute total
 		var old_x_max = vis.xScale.domain()[1]; // default domain extent is [0, 1] when not set
-		var new_x_max = d3.max(vis.data, function(d) { return d.value; });
+		var new_x_max = d3.max(vis.data, function(d) { return d.value / 1000; });
 		var pct_diff = (new_x_max - old_x_max) / (old_x_max);
 
 		var x_max;
@@ -163,7 +163,7 @@ function PlantTypeChart() {
 			.duration(DURATION_LENGTH)
 			.attr("width", function(d) { 
 				if(d.value < 0) { d.value = 0; } // corrects bug: d.value can be very small and negative (e.g. e-10)
-				return vis.xScale(d.value); 
+				return vis.xScale(d.value / 1000); 
 			});
 	}
 
@@ -190,7 +190,7 @@ function PlantTypeChart() {
 		vis.bars
 			.attr("width", function(d) { 
 				if(d.value < 0) { d.value = 0; } // corrects bug: d.value can be very small and negative (e.g. e-10)
-				return vis.xScale(d.value); 
+				return vis.xScale(d.value / 1000); 
 			});
 	}
 
@@ -199,19 +199,21 @@ function PlantTypeChart() {
 // 1-dimensional scatterplot
 // one line for each power plant
 // power plant lines placed based on value (e.g. capacity, year built)
-function PlantsDistributionChart() {
+function PlantsDistributionChart(dimension) {
 	this.initVis = function() {
 		var vis = this;
 
+		vis.dimension = dimension;
+
 		// contains a count of power plants for each observed attribute value
-		var capacities = plants.getCapacityValues();
+		vis.dimension_vals = plants.getDimensionValues(dimension);
 
 		// create svg area
-		vis.margin = { top: 10, right: 20, bottom: 20, left: 10 };
-		vis.width = parseInt(d3.select('#capacity').style('width'), 10) - vis.margin.left - vis.margin.right;
+		vis.margin = { top: 10, right: 20, bottom: 20, left: 20 };
+		vis.width = parseInt(d3.select("#" + dimension).style('width'), 10) - vis.margin.left - vis.margin.right;
 		vis.height = 60 - vis.margin.top - vis.margin.bottom;
 
-		vis.svg = d3.select("#capacity").append("svg")
+		vis.svg = d3.select("#" + dimension).append("svg")
 		    .attr("width", vis.width + vis.margin.left + vis.margin.right)
 		    .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
 			.append("g")
@@ -222,14 +224,21 @@ function PlantsDistributionChart() {
 		    .attr("class", "bars")
 
 		// create x scale and x axis
-		var max_capacity = d3.max(capacities, function(d){
+		var max_dimension_val = d3.max(vis.dimension_vals, function(d){
 			return d.key;
 		});
 
+		var extent;
+		if(dimension == "capacity") { extent = [0, max_dimension_val]; }
+		else { extent = [1875, 2015]; }
+
 		vis.xScale = d3.scale.linear()
-			.domain([0, max_capacity])
+			.domain(extent)
 		    .range([0, vis.width])
 		    .nice();
+
+		vis.xAxis = d3.svg.axis()
+	    	.orient("bottom");
 
 		vis.xAxisVisual = vis.svg.append("g")
 			.attr("class", "x-axis axis")
@@ -239,15 +248,10 @@ function PlantsDistributionChart() {
 		// http://bl.ocks.org/mbostock/4349545
 		vis.brush = d3.svg.brush()
 		    .x(vis.xScale)
-		    .extent([0, vis.xScale.domain()[1]])
+		    .extent(vis.xScale.domain())
 		    .on("brushstart", brushstart)
 		    .on("brush", brushmove)
 		    .on("brushend", brushend);
-
-		var arc = d3.svg.arc()
-		    .outerRadius(vis.height / 2)
-		    .startAngle(0)
-		    .endAngle(function(d, i) { return i ? -Math.PI : Math.PI; });
 
 		vis.brushVisual = vis.svg.append("g")
 		    .attr("class", "brush")
@@ -269,79 +273,117 @@ function PlantsDistributionChart() {
 				return "M" + (.5 * x) + "," + 0 + "A6,6 0 0 " + e + " " + (6.5 * x) + "," + (0 + 6) + "V" + (y - 6) + "A6,6 0 0 " + e + " " + (.5 * x) + "," + y + "Z";
         	});
 
-		brushstart();
-		brushmove();
-
 		function brushstart() {
 			vis.svg.classed("selecting", true);
 		}
 
 		// update data based on changes in selected data
 		function brushmove() {
-			var s = vis.brush.extent();
-
-			// allows updating color of bars that are selected
-			vis.svg.selectAll("rect.bar")
-				.classed("selected", function(d) {
-					return s[0] <= d.key && d.key <= s[1]; 
-				});
-
 			// filter power plants and update other visualizations accordingly
-			plants.filterCapacity(s);
-			updateAllVis("capacity");
+			var s = vis.brush.extent();
+			plants.filterDimension(s, vis.dimension);
+			updateAllVis(dimension);
 		}
 
 		function brushend() {
 			vis.svg.classed("selecting", !d3.event.target.empty());
 		}
 
-		vis.updateVis()
+		vis.updateVis();
 	}
 
 	this.updateVis = function() {
 		var vis = this;
 
 		// contains a count of power plants for each observed attribute value
-		var capacities = plants.getCapacityValues();
+		vis.dimension_vals = plants.getDimensionValues(dimension);
 
-		// get brush extent and max x value prior to updating the scales
-		// used when updating the brush
-		// also used when determining whether a plant stripe is within the brush range
-		var old_brush_extent = vis.brush.extent();
-		var old_x_max = vis.xScale.domain()[1];
+		if(vis.dimension == "capacity") {
+			// get brush extent and max x value prior to updating the scales
+			// used when updating the brush
+			// also used when determining whether a plant stripe is within the brush range
+			var old_brush_extent = vis.brush.extent();
+			var old_x_max = vis.xScale.domain()[1];
 
-		// update scale based on selected attribute
-		vis.xScale
-			.domain([0, d3.max(capacities, function(d){
-				return (d.value > 0) * d.key; // assure that there is at least 1 plant at this attribute value
-			})])
-			.nice();
+			// update scale based on selected attribute
+			vis.xScale
+				.domain([0, d3.max(vis.dimension_vals, function(d){
+					return (d.value > 0) * d.key; // assure that there is at least 1 plant at this attribute value
+				})]);
 
-		// update axis
-		vis.xAxis = d3.svg.axis()
-    		.scale(vis.xScale)
-    		.orient("bottom")
-    		.ticks(5);
+			// update axis
+			vis.xAxis
+	    		.scale(vis.xScale);
 
-  		vis.xAxisVisual
-			.transition()
-			.duration(DURATION_LENGTH)
-			.call(vis.xAxis);
+	    	vis.setTicks();
+
+	  		vis.xAxisVisual
+				.transition()
+				.duration(DURATION_LENGTH)
+				.call(vis.xAxis);
+
+			vis.updateBars();
+
+			// update brush
+			var range = old_brush_extent;
+			range[1] = Math.min(vis.xScale.domain()[1], range[1]); // rightmost brush value should not be greater than max x-scale value
+
+			if(old_brush_extent[1] == old_x_max){
+				range[1] = vis.xScale.domain()[1]; // if rightmost brush value was at the max x value, then the rightmost brush value should be at the new max value 
+			}
+
+			vis.brush
+			    .x(vis.xScale)
+			    .extent(range);
+
+	  		vis.brushVisual
+				.transition()
+				.duration(DURATION_LENGTH)
+				.call(vis.brush);
+		}
+		else { // year_built_chart
+
+			vis.xAxis
+	    		.scale(vis.xScale)
+	    		.tickFormat(d3.format("d"));
+
+	    	vis.setTicks();
+
+	  		vis.xAxisVisual
+				.transition()
+				.duration(DURATION_LENGTH)
+				.call(vis.xAxis);
+
+			vis.updateBars();
+
+			vis.brush
+			    .x(vis.xScale)
+			    .extent(vis.brush.extent());
+
+	  		vis.brushVisual
+				.transition()
+				.duration(DURATION_LENGTH)
+				.call(vis.brush);
+		}
+	}
+
+	this.updateBars = function() {
+		var vis = this;
 
 		// enter, update, exit bars
 		vis.bars = vis.barsVisual.selectAll(".bar")
-			.data(capacities, function(d) { return d.key; });
+			.data(vis.dimension_vals, function(d) { return d.key; });
 
 		vis.bars
 			.enter()
 			.append("rect")
 			.attr("class", "bar")
-			.attr("width", 1)
+			.attr("width", function() {
+				if(vis.attribute == "capacity"){ return 1; }
+				else { return 5; }
+			})
 			.attr("height", vis.height)
 			.attr("fill", "gray")
-			.classed("selected", function(d) { // currently selected by the brush
-				return old_brush_extent[0] <= d.key && d.key <= old_brush_extent[1]; 
-			})
 			.attr("y", 0 );
 
 		vis.bars
@@ -351,37 +393,20 @@ function PlantsDistributionChart() {
 				return vis.xScale(d.key); 
 			})
 			.attr("opacity", function(d) {
-				return Math.min(1, d.value * 1.0 / 10.0); // d.value is the number of plants with attribute value = d.key
+				return Math.min(1, d.value * 1.0 / 20.0); // d.value is the number of plants with attribute value = d.key
 			});
 
 		vis.bars
 			.exit()
 			.remove();
-
-		// update brush
-		var range = old_brush_extent;
-		range[1] = Math.min(vis.xScale.domain()[1], range[1]); // rightmost brush value should not be greater than max x-scale value
-
-		if(old_brush_extent[1] == old_x_max){
-			range[1] = vis.xScale.domain()[1]; // if rightmost brush value was at the max x value, then the rightmost brush value should be at the new max value 
-		}
-
-		vis.brush
-		    .x(vis.xScale)
-		    .extent(range);
-
-  		vis.brushVisual
-			.transition()
-			.duration(DURATION_LENGTH)
-			.call(vis.brush);
 	}
 
-	this.resizeVis = function() { // change all of this
+	this.resizeVis = function() {
 		var vis = this;
 
 		// resize based on width of container
 		// http://eyeseast.github.io/visible-data/2013/08/28/responsive-charts-with-d3/
-		vis.width = parseInt(d3.select('#capacity').style('width'), 10) - vis.margin.left - vis.margin.right;
+		vis.width = parseInt(d3.select('#' + vis.dimension).style('width'), 10) - vis.margin.left - vis.margin.right;
 		vis.xScale
 			.range([0, vis.width]);
 
@@ -391,8 +416,9 @@ function PlantsDistributionChart() {
 	    // redraw axis
 	    vis.xAxis = d3.svg.axis()
     		.scale(vis.xScale)
-    		.orient("bottom")
-    		.ticks(5);
+    		.orient("bottom");
+
+    	vis.setTicks();
 
   		vis.xAxisVisual
 			.call(vis.xAxis);
@@ -411,6 +437,21 @@ function PlantsDistributionChart() {
 			.call(vis.brush);
 	}
 
+	// helper function for setting the appropriate number of x-axis ticks based on the width of the container
+	this.setTicks = function() {
+		var vis = this;
+
+		var nTicks;
+		if(vis.width < 500) {
+			nTicks = 4;
+		}
+		else {
+			nTicks = 10;
+		}
+
+		vis.xAxis
+			.ticks(nTicks);
+	}
 }
 
 
@@ -423,8 +464,6 @@ function YearChart() {
 
 		// contains plant attributes by year
 		var data = plants.getAttributeByYearType();
-
-		console.log(data);
 
 		// create chart area
 		var margin = {top: 20, right: 20, bottom: 30, left: 40};

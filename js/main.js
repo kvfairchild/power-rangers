@@ -19,7 +19,7 @@ var PLANT_COLORS = {
 
 // used for setting axis labels
 var ATTRIBUTE_LABELS = {
-	"capacity": "capacity in MW",
+	"capacity": "capacity in GW",
 	"generation": "generation in millions of MWh",
 	"co2_emissions": "carbon dioxide emissions in thousands of short tons"
 };
@@ -34,6 +34,7 @@ var map;
 var plant_type_chart;
 var capacity_chart;
 var year_chart;
+var year_built_chart;
 
 // ***************************************
 // load the data and initialize the visualiations
@@ -66,8 +67,11 @@ queue()
 		plant_type_chart = new PlantTypeChart;
 		plant_type_chart.initVis();
 
-		capacity_chart = new PlantsDistributionChart;
+		capacity_chart = new PlantsDistributionChart("capacity");
 		capacity_chart.initVis();
+
+		year_built_chart = new PlantsDistributionChart("year_built");
+		year_built_chart.initVis();
 
 		year_chart = new YearChart;
 		year_chart.initVis();
@@ -80,6 +84,7 @@ queue()
 // "chart" specifies which chart is causing the change (and thus shouldn't be updated)
 function updateAllVis(chart) {
 	if(chart != "capacity") { capacity_chart.updateVis(); }
+	if(chart != "year_built") { year_built_chart.updateVis(); }
 	if(chart != "plant_type") { plant_type_chart.updateVis(); }
 	if(chart != "map") { map.updateVis(); }
 }
@@ -88,6 +93,7 @@ function updateAllVis(chart) {
 function resizeAllVis() {
 	plant_type_chart.resizeVis();
 	capacity_chart.resizeVis();
+	year_built_chart.resizeVis();
 }
 
 d3.select(window).on('resize', resizeAllVis); 

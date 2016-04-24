@@ -41,6 +41,10 @@ function PowerPlants(annual_data, plant_info) {
 		return d.state; // state or District of Columbia
 	});
 
+	this.year_built = this.annual_data.dimension(function (d) {
+		return d.min_year_built;
+	});
+
 	// **********************************
 	// create groups
 
@@ -94,6 +98,7 @@ function PowerPlants(annual_data, plant_info) {
 	);
 
 	this.capacities = this.capacity.group();
+	this.year_builts = this.year_built.group();
 
 	// **********************************
 	// set functions
@@ -111,9 +116,6 @@ function PowerPlants(annual_data, plant_info) {
 	// get attribute total by fuel type
 	this.getAttributeTotalByType = function() {
 		var totals_by_type =  this.attribute_total_by_type.all();
-
-		// filter out all null values
-		console.log(totals_by_type);
 		
 		// reduce down to only the currently selected attribute
 		var return_data = [];
@@ -134,9 +136,13 @@ function PowerPlants(annual_data, plant_info) {
 		return this.getCapacityByYearType();
 	}
 
-	// get count of power plants for each capacity value
-	this.getCapacityValues = function() {
-		return this.capacities.all();
+	this.getDimensionValues = function(dimension) {
+		if(dimension == "capacity") {
+			return this.capacities.top(Infinity); // all();
+		}
+		else if(dimension == "year_built") {
+			return this.year_builts.all();
+		}
 	}
 
 	// get all power plants, ordered by capacity
@@ -157,9 +163,14 @@ function PowerPlants(annual_data, plant_info) {
 	// **********************************
 	// filter functions
 
-	// filter plants by capacity range
-	this.filterCapacity = function(extent) {
-		this.capacity.filterRange(extent);
+	// filter plants by capacity or by year built
+	this.filterDimension = function(extent, dimension) {
+		if(dimension == "capacity") {
+			this.capacity.filterRange(extent);
+		}
+		else if(dimension == "year_built") {
+			this.year_built.filterRange(extent);
+		}
 	}
 
 	// filter plants by plant type

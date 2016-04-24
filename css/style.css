@@ -191,9 +191,3 @@ circle.size {
 #year-chart .slider {
 	cursor: ew-resize;
 }
-
-/*
-.selecting rect.selected {
-	fill: red;
-} 
-changes color of selected plants for the capacity brush */
