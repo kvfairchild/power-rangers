@@ -19,7 +19,7 @@ function PlantTypeChart() {
 		}
 
 		// create chart area
-		vis.margin = {top: 20, right: 40, bottom: 30, left: 50};
+		vis.margin = {top: 5, right: 40, bottom: 30, left: 50};
     	vis.width = parseInt(d3.select('#plant-type').style('width'), 10) - vis.margin.left - vis.margin.right;
     	vis.height = 300 - vis.margin.top - vis.margin.bottom;
 
@@ -82,9 +82,22 @@ function PlantTypeChart() {
 		// sum for each plant type
 		vis.data = plants.getAttributeTotalByType();
 
-		// update scale and axis based on capacity
+		// update scale and axis based on max attribute total
+		var old_x_max = vis.xScale.domain()[1]; // default domain extent is [0, 1] when not set
+		var new_x_max = d3.max(vis.data, function(d) { return d.value; });
+		var pct_diff = (new_x_max - old_x_max) / (old_x_max);
+
+		var x_max;
+		if(new_x_max > old_x_max) { // always expand the axis to the right
+			x_max = new_x_max; 
+		} 
+		else if(new_x_max < old_x_max && pct_diff <= -.2) { // only compress the axis to the left if if there is a considerable change in the max value (so can see changes rather than axis always updating)
+			x_max = new_x_max; 
+		}
+		else { x_max = old_x_max; }
+
 		vis.xScale
-			.domain([0, Math.max(10, d3.max(vis.data, function(d) { return d.value; }))]) // no less than 10 MW or else the scale can have odd behavior when no plants are selected
+			.domain([0, Math.max(10, x_max)]) // no less than 10 MW or else the scale can have odd behavior when no plants are selected
 			.nice();
 
 		vis.xAxis = d3.svg.axis()
@@ -185,7 +198,7 @@ function PlantTypeChart() {
 
 // 1-dimensional scatterplot
 // one line for each power plant
-// power plant lines placed based on capacity value
+// power plant lines placed based on value (e.g. capacity, year built)
 function PlantsDistributionChart() {
 	this.initVis = function() {
 		var vis = this;
@@ -194,7 +207,7 @@ function PlantsDistributionChart() {
 		var capacities = plants.getCapacityValues();
 
 		// create svg area
-		vis.margin = { top: 10, right: 10, bottom: 20, left: 10 };
+		vis.margin = { top: 10, right: 20, bottom: 20, left: 10 };
 		vis.width = parseInt(d3.select('#capacity').style('width'), 10) - vis.margin.left - vis.margin.right;
 		vis.height = 60 - vis.margin.top - vis.margin.bottom;
 

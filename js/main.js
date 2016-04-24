@@ -17,6 +17,13 @@ var PLANT_COLORS = {
 	"Wind": "green"
 }
 
+// used for setting axis labels
+var ATTRIBUTE_LABELS = {
+	"capacity": "capacity in MW",
+	"generation": "generation in millions of MWh",
+	"co2_emissions": "carbon dioxide emissions in thousands of short tons"
+};
+
 // opacity used for plant circles / bars / etc
 var COLOR_OPACITY = 0.75;
 
@@ -32,12 +39,25 @@ var year_chart;
 // load the data and initialize the visualiations
 queue()
 	// annual_data contains a record for each plant-year combination
-	// plant_info contains a record for each plant and has info like name
+	// plant_info contains a record for each plant and has info like name, address, etc.
 	.defer(d3.json, "data/annual_data.json")
 	.defer(d3.json, "data/plant_info.json")
 	.await(function (error, annual_data, plant_info) {
     	plants = new PowerPlants(annual_data, plant_info);
-    	plants.filterYear(2009);
+    	
+    	// set initial filters based on html selections
+    	plants.filterYear(2009); // PUT THIS IN YEARCHART CLASS
+
+    	var e = document.getElementById("selState");
+		plants.filterState(e.options[e.selectedIndex].value);
+
+		var e = document.getElementById("sizeBy");
+		var attribute = e.options[e.selectedIndex].value;
+		plants.setAttribute(attribute);
+
+		// set initial axis label for attribute total by plant type chart
+		d3.select("#plant-type-label")
+    		.html(ATTRIBUTE_LABELS[attribute])
 
     	// the map must be the first visualizaiton created because its initial bounds will filter the other dimensions
     	map = new Map;
@@ -75,7 +95,16 @@ d3.select(window).on('resize', resizeAllVis);
 // ***************************************
 // html element filters
 
-$("#size-by").change(function() {
+$("#sizeBy").change(function() {
+	// update axis label for attribute total by plant type chart
+    d3.select("#plant-type-label")
+    	.style({background: "yellow"})
+    	.html(ATTRIBUTE_LABELS[this.value])
+    	.transition()
+    	.duration(DURATION_LENGTH * 2)
+    	.style({background: "#fff"});
+
+    // update visualizations
     plants.setAttribute(this.value);
     updateAllVis("all");
 });
