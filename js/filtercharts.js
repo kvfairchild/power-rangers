@@ -35,7 +35,7 @@ function PlantTypeChart() {
 			.offset([0, 10])
 			.direction("e")
 			.html(function(d) {
-				var value = d.value / 1000;
+				var value = d.value;
 				if(value < .005) {
 					value = Math.round(value * 10) / 10;
 				}
@@ -84,7 +84,7 @@ function PlantTypeChart() {
 
 		// update scale and axis based on max attribute total
 		var old_x_max = vis.xScale.domain()[1]; // default domain extent is [0, 1] when not set
-		var new_x_max = d3.max(vis.data, function(d) { return d.value / 1000; });
+		var new_x_max = d3.max(vis.data, function(d) { return d.value; });
 		var pct_diff = (new_x_max - old_x_max) / (old_x_max);
 
 		var x_max;
@@ -163,7 +163,7 @@ function PlantTypeChart() {
 			.duration(DURATION_LENGTH)
 			.attr("width", function(d) { 
 				if(d.value < 0) { d.value = 0; } // corrects bug: d.value can be very small and negative (e.g. e-10)
-				return vis.xScale(d.value / 1000); 
+				return vis.xScale(d.value); 
 			});
 	}
 
@@ -190,7 +190,7 @@ function PlantTypeChart() {
 		vis.bars
 			.attr("width", function(d) { 
 				if(d.value < 0) { d.value = 0; } // corrects bug: d.value can be very small and negative (e.g. e-10)
-				return vis.xScale(d.value / 1000); 
+				return vis.xScale(d.value); 
 			});
 	}
 

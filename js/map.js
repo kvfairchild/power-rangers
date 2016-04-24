@@ -118,7 +118,9 @@ function Map() {
 	    
 		circles
 	        .attr("cx", function(d) { return vis.map.latLngToLayerPoint(d.LatLng).x })
-	        .attr("cy", function(d) { return vis.map.latLngToLayerPoint(d.LatLng).y }) 
+	        .attr("cy", function(d) { return vis.map.latLngToLayerPoint(d.LatLng).y })
+	        .transition()
+	        .duration(DURATION_LENGTH)
 	        .attr("r", function(d) { return vis.getCircleSize(d[vis.attribute]); });
 		
 	    // update legend

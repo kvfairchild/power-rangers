@@ -19,7 +19,7 @@ var PLANT_COLORS = {
 
 // used for setting axis labels
 var ATTRIBUTE_LABELS = {
-	"capacity": "capacity in GW",
+	"capacity": "capacity in MW",
 	"generation": "generation in millions of MWh",
 	"co2_emissions": "carbon dioxide emissions in thousands of short tons"
 };
