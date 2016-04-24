@@ -113,6 +113,15 @@ circle.size {
 	text-anchor: middle;
 }
 
+
+/* ======================================== */
+/* stacked area chart for year selection */
+
+.area {
+	opacity: 0.7;
+	clip-path: url(#clip);
+}
+
 /* ======================================== */
 /* chart components */
 
