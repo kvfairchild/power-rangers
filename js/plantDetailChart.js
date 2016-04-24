@@ -22,7 +22,7 @@ function detail_draw(datas)
         .innerTickSize(-detail_h)
         .outerTickSize(5)
         .tickPadding(10)
-        .tickFormat("");
+        .tickFormat(d3.format("d"));
 
     var detail_yAxis = d3.svg.axis()
         .scale(detail_yScale)

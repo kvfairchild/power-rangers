@@ -21,7 +21,7 @@ function PlantTypeChart() {
 		// create chart area
 		vis.margin = {top: 5, right: 40, bottom: 30, left: 50};
     	vis.width = parseInt(d3.select('#plant-type').style('width'), 10) - vis.margin.left - vis.margin.right;
-    	vis.height = 300 - vis.margin.top - vis.margin.bottom;
+    	vis.height = 200 - vis.margin.top - vis.margin.bottom;
 
 		vis.svg = d3.select("#plant-type").append("svg")
 			.attr("width", vis.width + vis.margin.left + vis.margin.right)
@@ -66,6 +66,9 @@ function PlantTypeChart() {
     		.scale(vis.yScale)
     		.orient("left");
 
+    	vis.xAxis = d3.svg.axis()
+    		.orient("bottom");
+
     	vis.xAxisVisual = vis.svg.append("g")
 			.attr("class", "x-axis axis")
 			.attr("transform", "translate(0," + vis.height + ")");
@@ -100,10 +103,10 @@ function PlantTypeChart() {
 			.domain([0, Math.max(10, x_max)]) // no less than 10 MW or else the scale can have odd behavior when no plants are selected
 			.nice();
 
-		vis.xAxis = d3.svg.axis()
-    		.scale(vis.xScale)
-    		.orient("bottom")
-    		.ticks(5);
+		vis.setTicks();
+
+		vis.xAxis
+    		.scale(vis.xScale);
 
   		vis.xAxisVisual
 			.transition()
@@ -179,10 +182,10 @@ function PlantTypeChart() {
 		d3.select(vis.svg.node().parentNode) // svg element
 	        .style('width', (vis.width + vis.margin.left + vis.margin.right) + 'px');
 
-	    vis.xAxis = d3.svg.axis()
-    		.scale(vis.xScale)
-    		.orient("bottom")
-    		.ticks(5);
+	    vis.setTicks();
+
+	    vis.xAxis
+    		.scale(vis.xScale);
 
   		vis.xAxisVisual
 			.call(vis.xAxis);
@@ -194,6 +197,24 @@ function PlantTypeChart() {
 			});
 	}
 
+	// helper function for setting the appropriate number of x-axis ticks based on the width of the container
+	this.setTicks = function() {
+		var vis = this;
+
+		var nTicks;
+		if(vis.width < 300) {
+			nTicks = 2;
+		}
+		else if(vis.width < 500) {
+			nTicks = 4;
+		}
+		else {
+			nTicks = 10;
+		}
+
+		vis.xAxis
+			.ticks(nTicks);
+	}
 }
 
 // 1-dimensional scatterplot
@@ -229,7 +250,7 @@ function PlantsDistributionChart(dimension) {
 		});
 
 		var extent;
-		if(dimension == "capacity") { extent = [0, max_dimension_val]; }
+		if(vis.dimension == "capacity") { extent = [0, max_dimension_val]; }
 		else { extent = [1875, 2015]; }
 
 		vis.xScale = d3.scale.linear()
@@ -345,7 +366,7 @@ function PlantsDistributionChart(dimension) {
 
 			vis.xAxis
 	    		.scale(vis.xScale)
-	    		.tickFormat(d3.format("d"));
+				.tickFormat(d3.format("d"));
 
 	    	vis.setTicks();
 
@@ -414,9 +435,8 @@ function PlantsDistributionChart(dimension) {
 	        .style('width', (vis.width + vis.margin.left + vis.margin.right) + 'px');
 
 	    // redraw axis
-	    vis.xAxis = d3.svg.axis()
-    		.scale(vis.xScale)
-    		.orient("bottom");
+	    vis.xAxis
+    		.scale(vis.xScale);
 
     	vis.setTicks();
 
@@ -442,7 +462,10 @@ function PlantsDistributionChart(dimension) {
 		var vis = this;
 
 		var nTicks;
-		if(vis.width < 500) {
+		if(vis.width < 200) {
+			nTicks = 2;
+		}
+		else if(vis.width < 500) {
 			nTicks = 4;
 		}
 		else {

@@ -112,7 +112,9 @@ $("#sizeBy").change(function() {
 
     // update visualizations
     plants.setAttribute(this.value);
-    updateAllVis("all");
+    updateAllVis("map"); // ignore updating the map
+    var attribute_change = true;
+    map.updateVis(attribute_change); // update the map such that the circles transition
 });
 
 $("#selState").change(function() {
