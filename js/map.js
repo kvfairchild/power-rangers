@@ -27,7 +27,7 @@ function Map() {
 		}
 		vis.map.on("moveend", update); // used moveend instead of move to minimize the number of times filtering the data
 
-		// filter dataset based on which plants are in the current view
+		// filter dataset based on which plants are in the initial view
 		var bounds = vis.map.getBounds();
 		plants.filterLocation([bounds._southWest.lat, bounds._northEast.lat], [bounds._southWest.lng, bounds._northEast.lng]);
 
@@ -41,10 +41,13 @@ function Map() {
 	this.updateVis = function() {
 		var vis = this;
 
+		// get attribute to use for sizing circles
+		vis.attribute = plants.getAttribute();
+
 		// get all plants with lat/long values, exclude all others
 		// http://stackoverflow.com/questions/21216347/achieving-animated-zoom-with-d3-and-leaflet
 		var allPlants = plants.getAllPlants().filter(function(p){
-			return p.lat != null && p.long != null;
+			return p["lat"] != null && p["long"] != null && p[vis.attribute] > 0;
 		});
 
 		// set Leaflet LatLng value to use when setting position
@@ -54,13 +57,13 @@ function Map() {
 
 		// enter/update/exit power plants on map
 		var circles = vis.svg.selectAll(".plant")
-			.data(allPlants, function(d) { return d.plant_id; });
+			.data(allPlants, function(d) { return d["plant_id"]; });
 
 		circles
 			.enter()
 			.append("circle")
 			.attr("class", "plant")
-	        .attr("fill", function(d) { return PLANT_COLORS[d.plant_type]})
+	        .attr("fill", function(d) { return PLANT_COLORS[d["plant_type"]]})
 	        .attr("opacity", 0.625)
 	        .on("mouseover", function(d) {
 				d3.select("#intro-div")
@@ -73,16 +76,16 @@ function Map() {
 					.attr("opacity", 1);
 
 	        	// update plant-specific information
-				var plant = plants.getPlant(d.plant_id);
-	            d3.select("#plant_name").html(plant.name);
-	            d3.select("#addr_info").html(plant.city + ", " + d.state);
-	            d3.select("#tech_type").html(d.plant_type);
-	            d3.select("#inst_cap").html(d3.format("0,000")(Math.round(d.capacity * 10) / 10) + " MW");
+				var plant = plants.getPlant(d["plant_id"]);
+	            d3.select("#plant_name").html(plant["name"]);
+	            d3.select("#addr_info").html(plant["city"] + ", " + d["state"]);
+	            d3.select("#tech_type").html(d["plant_type"]);
+	            d3.select("#inst_cap").html(d3.format("0,000")(Math.round(d["capacity"] * 10) / 10) + " MW");
 	            d3.select("#gen_commenced").html("50");
 
 	            // create plant-specific chart
 	            var data = plants.getUnfilteredPlants().filter(function(p){
-					return d.plant_id == p.plant_id; // keep strings with length < 3
+					return d["plant_id"] == p["plant_id"]; // keep strings with length < 3
 				});
 	            detail_draw(data);
 	        })
@@ -116,9 +119,7 @@ function Map() {
 		circles
 	        .attr("cx", function(d) { return vis.map.latLngToLayerPoint(d.LatLng).x })
 	        .attr("cy", function(d) { return vis.map.latLngToLayerPoint(d.LatLng).y }) 
-	        .attr("r", function(d) { 
-				if(d.LatLng == null) { console.log(d.plant_id); }
-				return vis.getCircleSize(d.capacity); });
+	        .attr("r", function(d) { return vis.getCircleSize(d[vis.attribute]); });
 		
 	    // update legend
 	 /*   vis.updateLegend(); */
@@ -138,23 +139,6 @@ function Map() {
 	this.updateLegend = function() {
 		var vis = this;
 
-	    // create colored circles for power plant types
-	    var type_circles = vis.legend.selectAll("circle")
-	        .data(vis.plant_types);
-
-	    type_circles
-	        .enter()
-	        .append("circle")
-	        .attr("cx", function(d,i) {
-	            return i * 80 + 30;
-	        })
-	        .attr("cy", function(d,i) {
-	            return 40;
-	        })
-	        .attr("r", 10)
-	        .attr("fill", function(d) {
-	        	return PLANT_COLORS[d]; });
-
 	    // create circles for power plant sizes
 	    var size_circles = vis.legend.selectAll(".size")
 	        .data([1000, 100, 10]);
@@ -164,7 +148,7 @@ function Map() {
 	        .append("circle")
 	        .attr('class', 'size')
 	        .attr("cx", function(d, i){
-	        	return (100 * 7 + 50) + 100 + i * 100;
+	        	return 100 + i * 100;
 	        })
 	        .attr("cy", 40);
 
@@ -178,18 +162,29 @@ function Map() {
 	        .append("text")
 	        .attr('class', 'size-text')
 	        .attr("x", function(d, i){
-	        	return (100 * 7 + 50) + 100 + i * 100;
+	        	return 100 + i * 100;
 	        })
 	        .attr("y", 60)
 	        .text(function(d) { return d3.format("0,000")(d) + ' MW'; });
 	}
 
-	// helper function for calculating the size of a circle based on capacity and map zoom level
-	this.getCircleSize = function(capacity) {
+	// helper function for calculating the size of a circle based on attribute value and map zoom level
+	this.getCircleSize = function(attr_val) {
 		var vis = this;
 
 		var z = Math.min(6, vis.map.getZoom()); // cut off circle size alteration at zoom = 6
-	    var r = Math.sqrt(capacity) / 80 * Math.pow(2, z);
+
+		var r;
+		if(vis.attribute == "capacity") {
+			r = Math.sqrt(attr_val) / 80 * Math.pow(2, z);
+		}
+		else if(vis.attribute == "generation") {
+			r = Math.sqrt(attr_val) / 5 * Math.pow(2, z);
+		}
+		else if(vis.attribute == "co2_emissions") {
+			r = Math.sqrt(attr_val) / 80 * Math.pow(2, z);
+		}
+
 	    return r;
 	}
 }

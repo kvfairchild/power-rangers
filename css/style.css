@@ -50,6 +50,26 @@ p a:hover {
 }
 
 /* ======================================== */
+/* filtering seciton area */
+
+div.filterBy {
+	padding: 0 0 0 10px;
+	margin: 0;
+}
+
+label {
+	cursor: text;
+	font-size: 1.3em;
+	margin-top: 1em;
+}
+
+p.filterLabel {
+	display: inline;
+	margin: 0 0 0 .2em;
+	padding-bottom: 0;
+}
+
+/* ======================================== */
 /* plant-specific area */
 
 

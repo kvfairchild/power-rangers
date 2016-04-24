@@ -5,13 +5,15 @@ function PowerPlants(annual_data, plant_info) {
 	// **********************************
 	// data
 	this.data = annual_data;
-	this.annual_data = crossfilter(annual_data);
+	this.annual_data = crossfilter(annual_data.filter(function(p){
+		return p["plant_type"] != null;
+	}));
 	this.plant_info = plant_info;
 
 	// **********************************
 	// helpful variables
 	this.plant_types = Object.keys(PLANT_COLORS);
-	this.attribute = "capacity"; // capacity, generation, or co2_emissions
+	this.attribute; // capacity, generation, or co2_emissions
 
 	// **********************************
 	// create dimensions
@@ -109,6 +111,9 @@ function PowerPlants(annual_data, plant_info) {
 	// get attribute total by fuel type
 	this.getAttributeTotalByType = function() {
 		var totals_by_type =  this.attribute_total_by_type.all();
+
+		// filter out all null values
+		console.log(totals_by_type);
 		
 		// reduce down to only the currently selected attribute
 		var return_data = [];

@@ -16,28 +16,17 @@
 			<div class="row">
 				<label>Select the year to view:</label>
 				<div id="year-chart"></div>
-			</div>
-			<div class="row">
+
 				<label>Size by:</label>
-				<select class="form-control" id="size-by">
+				<select class="form-control" id="sizeBy">
 					<option value="capacity">Capacity (MW)</option>
 					<option value="generation">Generation (MWh)</option>
 					<option value="co2_emissions">CO2 Emissions</option>
 				</select>
-			</div>
-			<div class="row" >
+
 				<label>Filter by:</label>
 			
-				<div class="row" style="padding:10px 0px 0px 10px;">
-					<label>Type of Plant</label>
-					<div id="plant-type"></div>
-					
-					<label>Capacity(MW)</label>
-					<div id="capacity"></div>
-
-					<label>Year Built</label>
-					<div id="year-built"></div>
-
+				<div class="filterBy">
 					<label>State</label>
 					<select class="form-control" id="selState">
 						<option value="all">All</option>
@@ -93,6 +82,17 @@
 						<option value="WI">Wisconsin</option>
 						<option value="WY">Wyoming</option>
 					</select>
+
+					<label>Type of Plant</label>
+					<p id="plant-type-label" class="filterLabel"></p>
+					<div id="plant-type"></div>
+					
+					<label>Capacity (MW)</label>
+					<p class="filterLabel">one line for each plant</p>
+					<div id="capacity"></div>
+
+					<label>Year Built</label>
+					<div id="year-built"></div>
 					
 				</div>
 
@@ -141,7 +141,7 @@
 	<script src="js/lib/queue.v1.min.js"></script>
 	<script src="js/lib/crossfilter.min.js"></script>
     <script src="js/lib/leaflet.js"></script>
-    <script src="js/lib/bootstrap.min.js"></script>
+    <!--<script src="js/lib/bootstrap.min.js"></script>-->
 
 	<!-- class to help with filtering -->
 	<script src="js/powerplants.js"></script>
