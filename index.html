@@ -8,8 +8,22 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 	<script src="js/lib/jquery-1.12.3.min.js"></script>
-    
+
+	<!-- Script to hide preloader -->
+	<script type="text/javascript">
+
+		function hide_preloader() {
+			// To stop the preloader
+			// To apply Fade Out Effect to the Preloader
+			$("#preloader").delay(3000).fadeOut(1000);
+		}
+
+	</script>
+
 </head>
+<body onload="hide_preloader()">
+
+	<!-- Main Site -->
 	<div class="container-fluid">
 	<div class="row" style="padding:10px;">
 		<div id="controls" class="col-md-3">
@@ -164,4 +178,14 @@
 	<script src="js/main.js"></script>
 	
 </body>
+
+<!-- Preloader -->
+<div id = "preloader">
+	<div id = "windmill-preload">
+		<img class="blades" src="parallax/images/powers/blades.png" />
+		<img class="stand" src="parallax/images/powers/stand.png" />
+	</div>
+</div>
+
+
 </html>
