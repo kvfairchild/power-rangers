@@ -50,7 +50,7 @@ p a:hover {
 }
 
 /* ======================================== */
-<<<<<<< HEAD
+
 /* filtering section area */
 
 div.filterBy {
@@ -71,7 +71,6 @@ div.filterBy {
 	margin: 0;
 }
 
->>>>>>> master
 label {
 	cursor: text;
 	font-size: 1em;
@@ -85,6 +84,7 @@ label {
 select.form-control {
 	display: inline;
 	width: auto;
+	font-size: 1em;
 }
 
 p.filterLabel {
