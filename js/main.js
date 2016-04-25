@@ -9,7 +9,7 @@ var DURATION_LENGTH = 800;
 var PLANT_COLORS = {
 	"Coal": "#23527c", // "dk blue",
 	"Gas": "#b2df8a", // "lt green",
-	"Solar": "#ffff99", // "lt yellow",
+	"Solar": " #ffff00", // "yellow",
 	"Other": "#e31a1c", // "red",
 	"Oil": "#ff7f00", // "orange",
 	"Nuclear": "#fb9a99", // "pink",
@@ -115,6 +115,7 @@ function resizeAllVis() {
 	plant_type_chart.resizeVis();
 	capacity_chart.resizeVis();
 	year_built_chart.resizeVis();
+	area_chart.resizeVis();
 }
 
 d3.select(window).on('resize', resizeAllVis); 

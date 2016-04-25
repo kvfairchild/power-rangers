@@ -88,6 +88,9 @@ function Map() {
 		var bounds = vis.map.getBounds();
 		plants.filterLocation([bounds._southWest.lat, bounds._northEast.lat], [bounds._southWest.lng, bounds._northEast.lng]);
 
+		// create plant detail dot
+		vis.createDetailDot();
+
 		// create a legend
 		/* vis.createLegend(); */
 
@@ -113,22 +116,25 @@ function Map() {
 		});
 
 		// enter/update/exit power plants on map
-		var circles = vis.svg.selectAll(".plant")
+		circles = vis.svg.selectAll(".plant")
 			.data(allPlants, function(d) { return d["plant_id"]; });
 
 		circles
 			.enter()
 			.append("circle")
 			.attr("class", "plant")
-	        .attr("fill", function(d) { return PLANT_COLORS[d["plant_type"]]})
+	        .attr("fill", function(d) {return PLANT_COLORS[d["plant_type"]]})
 	        .attr("opacity", 0.625)
 	        .on("mouseover", function(d) {
 				d3.select("#intro-div")
 					.attr("hidden", true);
 				d3.select("#details-table")
 					.attr("hidden", null);
-	        	d3.select(this)
+				d3.select(this)
 					.attr("opacity", 1);
+
+				// update plant detail dot
+				vis.updateDetailDot(PLANT_COLORS[d["plant_type"]]);
 
 	        	// update plant-specific information
 				var plant = plants.getPlant(d["plant_id"]);
@@ -186,12 +192,49 @@ function Map() {
 	    	circles
 		        .attr("r", function(d) { return vis.getCircleSize(d[vis.attribute]); });
 	    }
-		
+
 	    // update legend
 	 /*   vis.updateLegend(); */
     }
 
-    this.createLegend = function() {
+	this.createDetailDot = function() {
+		var vis = this;
+
+		// create detail dot area
+		vis.dot = d3.select("#plant-color").append("svg")
+			.attr("width", "30px")
+			.attr("height", "30px")
+			.attr("visibility", "hidden");
+
+		// create circle
+		color_circle = vis.dot.selectAll(".dot")
+			.data([10]);
+
+		color_circle
+			.enter()
+			.append("circle")
+			.attr("class", "color")
+			.attr("cx", 20)
+			.attr("cy", 20)
+			.attr("r", 10)
+			.attr("fill", "none");
+
+	}
+
+	this.updateDetailDot = function(d) {
+		var vis = this;
+
+		var color = d;
+
+		color_circle
+			.attr("fill", color);
+
+		vis.dot
+			.attr("visibility", "visible")
+
+	}
+
+		this.createLegend = function() {
     	var vis = this;
 
     	// create legend area
