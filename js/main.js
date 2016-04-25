@@ -35,6 +35,10 @@ var plant_type_chart;
 var capacity_chart;
 var year_chart;
 var year_built_chart;
+<<<<<<< HEAD
+var area_chart;
+=======
+>>>>>>> master
 
 // ***************************************
 // load the data and initialize the visualiations
@@ -75,6 +79,10 @@ queue()
 
 		year_chart = new YearChart;
 		year_chart.initVis();
+
+		area_chart = new StackedAreaChart();
+		area_chart.initVis();
+
 	});
 
 // ***************************************
@@ -87,6 +95,7 @@ function updateAllVis(chart) {
 	if(chart != "year_built") { year_built_chart.updateVis(); }
 	if(chart != "plant_type") { plant_type_chart.updateVis(); }
 	if(chart != "map") { map.updateVis(); }
+	if(chart != "area_chart") { area_chart.updateVis(); }
 }
 
 // resize all visualizations when the window is resized

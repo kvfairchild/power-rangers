@@ -1,0 +1,287 @@
+/*
+Plugin: jQuery Parallax
+Version 1.1.3
+Author: Ian Lunn
+Twitter: @IanLunn
+Author URL: http://www.ianlunn.co.uk/
+Plugin URL: http://www.ianlunn.co.uk/plugins/jquery-parallax/
+
+License: http://creativecommons.org/licenses/by-sa/3.0/ (Attribution Share Alike). Please attribute work to Ian Lunn simply by leaving these comments in the source code or if you'd prefer, place a link on your website to http://www.ianlunn.co.uk/.
+*/
+
+@charset "utf-8";
+
+@font-face {
+	font-family: "Eurostile";
+	src: url("../fonts/eurostile-webfont.woff") format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Calibri";
+	src: url("../fonts/calibri-webfont.woff") format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+/* CSS Document */
+
+body{
+	margin: 0;
+	min-width: 980px;
+	padding: 0;
+}
+
+.narrative{
+	font-family: "Calibri";
+	color: white;
+	font-size: 24px;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	bottom: -30%;
+}
+
+img{
+	border: 0;
+}
+
+.center h1{
+	font-family: "Eurostile";
+	font-size: 65px;
+	font-style:normal;
+}
+
+.center h2{
+	font-family: "Calibri";
+	font-size: 36px;
+	color: black;
+}
+
+#header h1, #pixels{
+	color: #48941A;
+}
+
+.float-left{
+	float: left;
+	margin: 0 0 0 20px;
+}
+
+.float-right{
+	float: right;
+	margin: 0 20px 0 0;
+}
+
+.slight-right{
+	position: absolute;
+	right: 200px;
+}
+
+.center{
+	padding: 250px 0 0 0;
+	text-align: center;
+}
+
+#nav{
+	list-style: none;
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	z-index: 10000;
+}
+
+#nav li{
+	margin: 0 0 15px 0;	
+}
+
+#book{
+	width: 50px;
+	position: absolute;
+	right: -18px;
+}
+
+#header, #intro, #second{
+	width: 100%;
+}
+
+#intro{
+	background:url(../images/scene.jpg) 50% 0 no-repeat fixed;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	color: white;
+	height: 1000px;
+	margin: 0 auto;
+	padding: 0;
+}
+
+#shortcut-map{
+	width: 50px;
+	margin-bottom: -15px;
+}
+
+#second{
+	background-color: lightskyblue;
+	color: white;
+	height: 1000px;
+	margin: 0 auto;
+	overflow: hidden;
+	padding: 0;
+}
+
+#cloud-1{
+	margin-left: 200px;
+}
+
+#third{
+	background-color: lightskyblue;
+	color: white;
+	height: 1000px;
+	margin: 0 auto;
+	padding: 0;
+}
+
+#cloud-fill-1 {
+	position: absolute;
+	right: 15%;
+	top: -100px;
+}
+
+#balloon{
+	position: absolute;
+	top: 700px;
+	right: 100px;
+}
+
+#cloud-fill-2 {
+	position: absolute;
+	top: 750px;
+	right: 600px;
+}
+
+#fourth{
+	background-color: lightskyblue;
+	color: white;
+	height: 1000px;
+	margin: 0 auto;
+	overflow: hidden;
+	padding: 0;
+}
+
+#cloud-7{
+	margin: 125px 0;
+}
+
+#cloud-8{
+	margin: 85px 0 0 285px;
+}
+
+#fifth{
+	background:url(../images/scene.jpg) 50% 0 no-repeat fixed;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	color: white;
+	height: 1000px;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.story{
+	position: relative;
+	/*
+	margin: 0 auto;
+	min-width: 980px;
+	overflow: auto;
+	width: 980px;
+	*/
+}
+
+/* Animate buttons */
+
+@keyframes beat {
+	0% { -webkit-transform: scale(1); }
+	50% { -webkit-transform: scale(0.9); }
+	100% { -webkit-transform: scale(1); }
+}
+
+.button:hover{
+	animation: beat 2s;
+	transform-origin: 50% 50%;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+.button{
+	width: 120px;
+}
+
+/* Expansion for graph thumbnails */
+
+#preview{
+	position:absolute;
+	border:3px solid #ccc;
+	background:#333;
+	padding:5px;
+	display:none;
+	color:#fff;
+	box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
+}
+
+/* Wind animation */
+
+/* Firefox */
+@-moz-keyframes bladeSpin {
+	from { -moz-transform: rotate(0deg); }
+	to { -moz-transform: rotate(1440deg); }
+}
+/* WebKit - Chrome and Safari */
+@-webkit-keyframes bladeSpin {
+	from { -webkit-transform: rotate(0deg); }
+	to { -webkit-transform: rotate(1440deg); }
+}
+/* Opera */
+@-o-keyframes bladeSpin {
+	from { -o-transform: rotate(0deg); }
+	to { -o-transform: rotate(1440deg); }
+}
+
+@keyframes bladeSpin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(1440deg); }
+}
+
+#wind-animation{
+	position: relative;
+	height: 758px;
+}
+
+
+.stand {
+	position: absolute;
+	right: 250px;
+	top: 220px;
+	height: 530px;
+}
+
+.blades {
+	position: absolute;
+	right: 95px;
+	height:495px;
+
+	/* Animation properties*/
+
+	/* Firefox */
+	-moz-animation: bladeSpin 10s ease-in-out infinite;
+	/* WebKit - Chrome and Safari */
+	-webkit-animation: bladeSpin 10s ease-in-out infinite;
+	/* Opera */
+	-o-animation: bladeSpin 10s ease-in-out infinite;
+	/* general syntax */
+	animation: bladeSpin 10s ease-in-out infinite;
+
+}
