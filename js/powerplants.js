@@ -69,31 +69,40 @@ function PowerPlants(annual_data, plant_info) {
 	);
 
 	// sum capacity by plant type and year
-	this.capacity_by_year_type = this.year.group().reduce(
+	this.attribute_by_year_type = this.year.group().reduce(
 		// http://stackoverflow.com/a/28014830
 		function(p, v) {
 			for(var i = 0; i < pp.plant_types.length; i++) {
 				var type = pp.plant_types[i];
-				p[type] += v["capacity"] * (v["plant_type"] == type);
+				p["capacity"][type] += v["capacity"] * (v["plant_type"] == type);
+				p["generation"][type] += v["generation"] * (v["plant_type"] == type);
+				p["co2_emissions"][type] += v["co2_emissions"] * (v["plant_type"] == type);
 			}
 		    return p;
 		},
 		function(p, v) {
 			for(var i = 0; i < pp.plant_types.length; i++) {
 				var type = pp.plant_types[i];
-				p[type] -= v["capacity"] * (v["plant_type"] == type);
+				p["capacity"][type] -= v["capacity"] * (v["plant_type"] == type);
+				p["generation"][type] -= v["generation"] * (v["plant_type"] == type);
+				p["co2_emissions"][type] -= v["co2_emissions"] * (v["plant_type"] == type);
 			}
 			return p;
 		},
 		function() {
 			// array of plant_type: attribute_sum
-			var cap_by_type = {};
+			var initial = {};
+			initial["capacity"] = {};
+			initial["generation"] = {};
+			initial["co2_emissions"] = {};
 
 			for(var i = 0; i < pp.plant_types.length; i++) {
-				cap_by_type[pp.plant_types[i]] = 0;
+				initial["capacity"][pp.plant_types[i]] = 0;
+				initial["generation"][pp.plant_types[i]] = 0;
+				initial["co2_emissions"][pp.plant_types[i]] = 0;
 			}
 
-			return cap_by_type;
+			return initial;
 		}
 	);
 
@@ -127,13 +136,17 @@ function PowerPlants(annual_data, plant_info) {
 		return return_data;
 	}
 
-	// get capacity by fuel type for each year
-	this.getCapacityByYearType = function() {
-		return this.capacity_by_year_type.all();
-	}
-
 	this.getAttributeByYearType = function() {
-		return this.getCapacityByYearType();
+		var totals_by_year_type =  this.attribute_by_year_type.all();
+
+		// reduce down to only the currently selected attribute
+		var return_data = [];
+		for(var i = 0; i < totals_by_year_type.length; i++) {
+			var year = {"key": totals_by_year_type[i]["key"], "value": totals_by_year_type[i]["value"][pp.attribute]};
+			return_data.push(year);
+		}
+
+		return return_data;
 	}
 
 	this.getDimensionValues = function(dimension) {

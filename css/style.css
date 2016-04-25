@@ -51,6 +51,7 @@ p a:hover {
 
 
 /* ======================================== */
+
 /* filtering section area */
 
 div.filterBy {
@@ -64,14 +65,24 @@ div.filterBy {
 }
 
 div.filterBy {
-	padding: 0 0 0 10px;
+	padding: 0 0 0 20px;
 	margin: 0;
 }
 
 label {
 	cursor: text;
-	font-size: 1.3em;
+	font-size: 1em;
 	margin-top: 1em;
+}
+
+#controls label.select {
+	display: inline;
+}
+
+select.form-control {
+	display: inline;
+	width: auto;
+	font-size: 1em;
 }
 
 p.filterLabel {

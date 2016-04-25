@@ -38,7 +38,7 @@ function Map() {
 		vis.updateVis();
 	}
 
-	this.updateVis = function() {
+	this.updateVis = function(attribute_change) {
 		var vis = this;
 
 		// get attribute to use for sizing circles
@@ -70,8 +70,6 @@ function Map() {
 					.attr("hidden", true);
 				d3.select("#details-table")
 					.attr("hidden", null);
-				d3.select("#tooltip-h3")
-					.attr("hidden", null);
 	        	d3.select(this)
 					.attr("opacity", 1);
 
@@ -81,12 +79,12 @@ function Map() {
 	            d3.select("#addr_info").html(plant["city"] + ", " + d["state"]);
 	            d3.select("#tech_type").html(d["plant_type"]);
 	            d3.select("#inst_cap").html(d3.format("0,000")(Math.round(d["capacity"] * 10) / 10) + " MW");
-	            d3.select("#gen_commenced").html("50");
 
 	            // create plant-specific chart
 	            var data = plants.getUnfilteredPlants().filter(function(p){
-					return d["plant_id"] == p["plant_id"]; // keep strings with length < 3
+					return d["plant_id"] == p["plant_id"] && p["generation"] != null && p["generation"] >= 0; // keep strings with length < 3
 				});
+
 	            detail_draw(data);
 	        })
 
@@ -94,8 +92,6 @@ function Map() {
 				d3.select("#intro-div")
 					.attr("hidden", null);
 				d3.select("#details-table")
-					.attr("hidden", true);
-				d3.select("#tooltip-h3")
 					.attr("hidden", true);
 	        	d3.select(this)
 					.attr("opacity", 0.75);
@@ -118,10 +114,18 @@ function Map() {
 	    
 		circles
 	        .attr("cx", function(d) { return vis.map.latLngToLayerPoint(d.LatLng).x })
-	        .attr("cy", function(d) { return vis.map.latLngToLayerPoint(d.LatLng).y })
-	        .transition()
-	        .duration(DURATION_LENGTH)
-	        .attr("r", function(d) { return vis.getCircleSize(d[vis.attribute]); });
+	        .attr("cy", function(d) { return vis.map.latLngToLayerPoint(d.LatLng).y });
+
+	    if(attribute_change) {
+	    	circles
+		        .transition()
+		        .duration(DURATION_LENGTH)
+		        .attr("r", function(d) { return vis.getCircleSize(d[vis.attribute]); });
+	    }
+	    else {
+	    	circles
+		        .attr("r", function(d) { return vis.getCircleSize(d[vis.attribute]); });
+	    }
 		
 	    // update legend
 	 /*   vis.updateLegend(); */
