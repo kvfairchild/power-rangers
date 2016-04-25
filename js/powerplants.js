@@ -102,8 +102,6 @@ function PowerPlants(annual_data, plant_info) {
 				initial["co2_emissions"][pp.plant_types[i]] = 0;
 			}
 
-			console.log(initial);
-
 			return initial;
 		}
 	);
