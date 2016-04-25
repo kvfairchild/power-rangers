@@ -767,6 +767,8 @@ function StackedAreaChart() {
 				.style("fill", function (d) {
 					return vis.colorScale(d.name);
 				})
+				.transition()
+				.duration(DURATION_LENGTH)
 				.attr("d", function (d) {
 					return vis.area(d.values);
 				})
@@ -778,6 +780,9 @@ function StackedAreaChart() {
 
 			// Call axis functions with the new domain
 			vis.svg.select(".x-axis").call(vis.xAxis);
-			vis.svg.select(".y-axis").call(vis.yAxis);
+			vis.svg.select(".y-axis")
+				.transition()
+				.duration(DURATION_LENGTH)
+				.call(vis.yAxis);
 		}
 }
