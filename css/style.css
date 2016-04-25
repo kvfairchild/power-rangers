@@ -50,6 +50,20 @@ p a:hover {
 }
 
 /* ======================================== */
+<<<<<<< HEAD
+/* filtering section area */
+
+div.filterBy {
+	padding: 0 0 0 0px;
+	margin: 0;
+}
+
+#year-controls{
+	margin-top: -15px;
+	margin-left: -40px;
+}
+
+=======
 /* filtering seciton area */
 
 div.filterBy {
@@ -57,6 +71,7 @@ div.filterBy {
 	margin: 0;
 }
 
+>>>>>>> master
 label {
 	cursor: text;
 	font-size: 1.3em;
@@ -69,6 +84,19 @@ p.filterLabel {
 	padding-bottom: 0;
 }
 
+<<<<<<< HEAD
+div.tooltip {
+	position: absolute;
+	text-align: center;
+	background: white;
+	padding: 2px;
+	border: 1px;
+	border-radius: 4px;
+	pointer-events: none;
+}
+
+=======
+>>>>>>> master
 /* ======================================== */
 /* plant-specific area */
 
