@@ -76,9 +76,11 @@ function Map() {
 	        	// update plant-specific information
 				var plant = plants.getPlant(d["plant_id"]);
 	            d3.select("#plant_name").html(plant["name"]);
-	            d3.select("#addr_info").html(plant["city"] + ", " + d["state"]);
-	            d3.select("#tech_type").html(d["plant_type"]);
-	            d3.select("#inst_cap").html(d3.format("0,000")(Math.round(d["capacity"] * 10) / 10) + " MW");
+				d3.select("#address").html(plant["address"]);
+	            d3.select("#city_state").html(plant["city"] + ", " + d["state"]);
+	            d3.select("#tech_type").html(plant["type"]);
+				d3.select("#gen_commenced").html("Built in " + d["min_year_built"]);
+	            d3.select("#inst_cap").html("<b>" + d3.format("0,000")(Math.round(d["capacity"] * 10) / 10) + "</b>" + " MW");
 
 	            // create plant-specific chart
 	            var data = plants.getUnfilteredPlants().filter(function(p){
@@ -98,7 +100,8 @@ function Map() {
 
 				// clear plant-specific information
 				d3.select("#plant_name").html("");
-	            d3.select("#addr_info").html("");
+				d3.select("#address").html("");
+	            d3.select("#city_state").html("");
 	            d3.select("#tech_type").html("");
 	            d3.select("#inst_cap").html("");
 	            d3.select("#gen_commenced").html("");

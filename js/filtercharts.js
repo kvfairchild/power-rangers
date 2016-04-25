@@ -488,7 +488,7 @@ function YearChart() {
 		var data = plants.getAttributeByYearType();
 
 		// create chart area
-		var margin = {top: 0, right: 20, bottom: 30, left: 60};
+		var margin = {top: -5, right: 20, bottom: 30, left: 60};
     	vis.width = 320 - margin.left - margin.right;
     	vis.height = 50 - margin.top - margin.bottom;
 
@@ -536,7 +536,7 @@ function YearChart() {
 		vis.handle = vis.slider.append("circle")
 		    .attr("class", "handle")
 		    .attr("transform", "translate(0," + vis.height / 2 + ")")
-		    .attr("r", 9);
+		    .attr("r", 7);
 
 		vis.slider
 			.call(vis.brush.event)
@@ -582,30 +582,6 @@ function StackedAreaChart() {
 	this.initVis = function() {
 		var vis = this;
 
-		var yearData = plants.getAttributeByYearType();
-
-// Contains layered year attribute data
-		vis.layers = formatData();
-
-		// Format the data
-
-		function formatData() {
-
-			// Contains plant attributes by year
-			var formattedData = [];
-
-			// Format data
-			yearData.forEach(function (d, i) {
-				formattedData[i] = new Object();
-				formattedData[i].year = new Date(d.key);
-				for (val in d.value) {
-					formattedData[i][val] = d.value[val];
-				}
-			});
-
-			return formattedData;
-		}
-
 		// Set ordinal color scale
 		vis.colorScale = d3.scale.ordinal()
 			.domain((function (d) {
@@ -639,7 +615,7 @@ function StackedAreaChart() {
 				.append("g")
 				.attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-			// TO-DO: Overlay with path clipping
+			// Overlay with path clipping
 
 			vis.svg.append("defs").append("clipPath")
 				.attr("id", "clip")
@@ -647,12 +623,46 @@ function StackedAreaChart() {
 				.attr("width", vis.width)
 				.attr("height", vis.height);
 
+
+			// (Filter, aggregate, modify data)
+
+			vis.updateVis();
+		}
+
+
+		this.updateVis = function() {
+			var vis = this;
+
+			var yearData = plants.getAttributeByYearType();
+
+			// Contains layered year attribute data
+			vis.layers = formatData();
+
+			// Format the data
+
+			function formatData() {
+
+				// Contains plant attributes by year
+				var formattedData = [];
+
+				// Format data
+				yearData.forEach(function (d, i) {
+					formattedData[i] = new Object();
+					formattedData[i].year = new Date(d.key);
+					for (val in d.value) {
+						formattedData[i][val] = d.value[val];
+					}
+				});
+
+				return formattedData;
+			}
+
 			// Scales and axes
 			vis.x = d3.time.scale()
 				.range([0, vis.width])
 				.domain(d3.extent(vis.layers, function (d) {
 					return d.year;
-				 }));
+				}));
 
 			vis.y = d3.scale.linear()
 				.range([vis.height, 0]);
@@ -666,7 +676,7 @@ function StackedAreaChart() {
 				.orient("left")
 				.ticks(3)
 				.tickFormat(function(d) {
-					if (d === 0) {
+					if (d === 0 || d < 10000) {
 						return d;
 					} else if (d < 1000000) {
 						return d / 1000 + "k";
@@ -675,9 +685,9 @@ function StackedAreaChart() {
 					}
 				});
 
-		/*	vis.svg.append("g")
-				.attr("class", "x-axis axis")
-				.attr("transform", "translate(0," + vis.height + ")"); */
+			/*	vis.svg.append("g")
+			 .attr("class", "x-axis axis")
+			 .attr("transform", "translate(0," + vis.height + ")"); */
 
 			vis.svg.append("g")
 				.attr("class", "y-axis axis");
@@ -714,20 +724,6 @@ function StackedAreaChart() {
 				.y1(function (d) {
 					return vis.y(d.y0 + d.y);
 				});
-
-			// (Filter, aggregate, modify data)
-
-			vis.updateVis();
-		}
-
-
-		/*
-		 * The drawing function - should use the D3 update sequence (enter, update, exit)
-		 * Function parameters only needed if different kinds of updates are needed
-		 */
-
-		this.updateVis = function() {
-			var vis = this;
 
 			// Update domain
 			// Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
