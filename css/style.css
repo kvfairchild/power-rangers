@@ -50,7 +50,6 @@ p a:hover {
 }
 
 /* ======================================== */
-<<<<<<< HEAD
 /* filtering section area */
 
 div.filterBy {
@@ -63,15 +62,11 @@ div.filterBy {
 	margin-left: -40px;
 }
 
-=======
-/* filtering seciton area */
-
 div.filterBy {
 	padding: 0 0 0 10px;
 	margin: 0;
 }
 
->>>>>>> master
 label {
 	cursor: text;
 	font-size: 1.3em;
@@ -84,7 +79,6 @@ p.filterLabel {
 	padding-bottom: 0;
 }
 
-<<<<<<< HEAD
 div.tooltip {
 	position: absolute;
 	text-align: center;
@@ -95,8 +89,6 @@ div.tooltip {
 	pointer-events: none;
 }
 
-=======
->>>>>>> master
 /* ======================================== */
 /* plant-specific area */
 
