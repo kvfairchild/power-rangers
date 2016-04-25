@@ -134,17 +134,24 @@
 						<p>Each circle represents a power plant.</p>
 						<p><b>Hover</b> over a circle to learn more about a specific plant.</p>
 						<p>Select options from the dashboard on the left to <b>filter</b>.</p>
-						<p><b>Zoom</b> in or out with the arrows in the top left corner of the map</p>
+						<p><b>Zoom</b> in or out with the arrows in the top left corner of the map.</p>
 					</div>
 					<div class="row">
 						<div id='tooltip-data' class="col-md-6">
 							<table id='details-table' hidden>
-								<div id = "plant-color"></div>
-								<h1 id="plant_name"></h1> <br>
-								<tr><td class='first-col'>Address</td><td id="addr_info"></td></tr>
-								<tr><td class='first-col'>Technology type</td><td id="tech_type"></td></tr>
-								<tr><td class='first-col'>Capacity </td><td id="inst_cap"></td></tr>
-								<tr><td class='first-col'>Generation </td><td id="gen_commenced"></td></tr>
+								<div class = "col-md-12">
+									<div id = "plant-color"></div>
+									<h2 id="plant_name"></h2>
+									<h3 id="gen_commenced"></h3>
+								</div>
+								<div class = "col-md-8">
+									<p id = "address"><br>
+									<p id = "city_state"></p>
+								</div>
+								<div class = "col-md-4">
+									<p id="inst_cap"></p>
+									<p id="tech_type"></p>
+								</div>
 							</table>
 						</div>
 						<div id='tooltip-chart' class="col-md-6"></div>

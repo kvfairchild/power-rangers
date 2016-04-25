@@ -5,7 +5,7 @@ function detail_draw(data)
     	d3.select("#tooltip-chart").html("No generation data for this plant");
     }
     else {
-	    var detail_m = {top: 10, right: 50, bottom: 60, left: 150},
+	    var detail_m = {top: 20, right: 30, bottom: 60, left: 50},
 	        detail_w = $("#tooltip-chart").width() - detail_m.left - detail_m.right,
 	        detail_h = 200 - detail_m.top - detail_m.bottom;
 
@@ -47,6 +47,13 @@ function detail_draw(data)
 	        .attr("class", "x axis")
 	        .attr("transform", "translate(0," + detail_h + ")")
 	        .call(detail_xAxis)
+			.selectAll("text")
+			.style("text-anchor", "end")
+			.attr("dx", "-.8em")
+			.attr("dy", ".15em")
+			.attr("transform", function(d) {
+				return "rotate(-65)"
+			});
 
 	    svgDetail.append("g")
 	        .attr("class", "y axis")
@@ -56,5 +63,11 @@ function detail_draw(data)
 	        .data([data])
 	        .attr("class", "line")
 	        .attr("d", detail_line);
+
+		svgDetail.append("text")
+			.attr("x", (detail_w / 2))
+			.attr("y", 0 - (detail_m.top / 2))
+			.attr("text-anchor", "middle")
+			.text("Generation (MWh)");
 	}
 }
