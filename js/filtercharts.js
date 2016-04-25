@@ -742,10 +742,10 @@ function StackedAreaChart() {
 				.style("opacity", 0);
 
 			// Draw the layers
-			var categories = vis.svg.selectAll(".area")
+			vis.categories = vis.svg.selectAll(".area")
 				.data(vis.stackedData);
 
-			categories.enter().append("path")
+			vis.categories.enter().append("path")
 				.attr("class", "area")
 				.attr("d", function (d) {
 					return vis.area(d.values);
@@ -764,7 +764,7 @@ function StackedAreaChart() {
 						.style("opacity", 0);
 				});
 
-			categories
+			vis.categories
 				.style("fill", function (d) {
 					return vis.colorScale(d.name);
 				})
@@ -776,7 +776,9 @@ function StackedAreaChart() {
 
 			// Update tooltip text
 
-			categories.exit().remove();
+			vis.categories
+				.exit()
+				.remove();
 
 
 			// Call axis functions with the new domain

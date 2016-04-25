@@ -188,10 +188,6 @@ div.tooltip {
   stroke-width: 1px;
 }
 
-circle.size {
-	fill: #ddd;
-}
-
 #site-name-row {
   margin-top: 5px;
   margin-bottom:0;
@@ -201,17 +197,19 @@ circle.size {
 /* ======================================== */
 /* legend */
 
+#legend {
+	position: absolute;
+	top: 300px;
+	background-color: rgba(255, 255, 255, 0.75);
+}
+
 #legend text {
 	alignment-baseline: middle;
 	font-size: 14px;
 }
 
-#legend text. {
+#legend text {
 	text-anchor: start;
-}
-
-#legend text.size-text {
-	text-anchor: middle;
 }
 
 /* ======================================== */

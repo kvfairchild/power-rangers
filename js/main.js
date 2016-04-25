@@ -21,7 +21,7 @@ var PLANT_COLORS = {
 var ATTRIBUTE_LABELS = {
 	"capacity": "capacity in MW",
 	"generation": "generation in millions of MWh",
-	"co2_emissions": "carbon dioxide emissions in thousands of short tons"
+	"co2_emissions": "carbon dioxide emissions in millions of short tons"
 };
 
 // opacity used for plant circles / bars / etc

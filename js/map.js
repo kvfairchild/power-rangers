@@ -88,11 +88,17 @@ function Map() {
 		var bounds = vis.map.getBounds();
 		plants.filterLocation([bounds._southWest.lat, bounds._northEast.lat], [bounds._southWest.lng, bounds._northEast.lng]);
 
-		// create plant detail dot
-		vis.createDetailDot();
+		// create detail dot area
+		vis.dot = d3.select("#plant-color").append("svg")
+			.attr("width", "30px")
+			.attr("height", "30px");
 
 		// create a legend
-		/* vis.createLegend(); */
+	    vis.legend = d3.select("#legend").append("svg")
+	        .attr("width", "200px")
+	        .attr("height", "200px");
+
+	    vis.plant_types = Object.keys(PLANT_COLORS);
 
 		// update the power plants and the legend
 		vis.updateVis();
@@ -134,7 +140,7 @@ function Map() {
 					.attr("opacity", 1);
 
 				// update plant detail dot
-				vis.updateDetailDot(PLANT_COLORS[d["plant_type"]]);
+				// vis.updateDetailDot(PLANT_COLORS[d["plant_type"]]);
 
 	        	// update plant-specific information
 				var plant = plants.getPlant(d["plant_id"]);
@@ -160,6 +166,8 @@ function Map() {
 					.attr("hidden", true);
 	        	d3.select(this)
 					.attr("opacity", 0.75);
+
+				// clear colored dot
 
 				// clear plant-specific information
 				d3.select("#plant_name").html("");
@@ -194,87 +202,78 @@ function Map() {
 	    }
 
 	    // update legend
-	 /*   vis.updateLegend(); */
+	 	vis.updateLegend();
     }
-
-	this.createDetailDot = function() {
-		var vis = this;
-
-		// create detail dot area
-		vis.dot = d3.select("#plant-color").append("svg")
-			.attr("width", "30px")
-			.attr("height", "30px")
-			.attr("visibility", "hidden");
-
-		// create circle
-		color_circle = vis.dot.selectAll(".dot")
-			.data([10]);
-
-		color_circle
-			.enter()
-			.append("circle")
-			.attr("class", "color")
-			.attr("cx", 20)
-			.attr("cy", 20)
-			.attr("r", 10)
-			.attr("fill", "none");
-
-	}
 
 	this.updateDetailDot = function(d) {
 		var vis = this;
 
-		var color = d;
+		// create circle
+		vis.color_circle = vis.dot.selectAll("circle")
+			.data([d]);
 
-		color_circle
-			.attr("fill", color);
+		vis.color_circle
+			.enter()
+			.append("circle")
+			.attr("cx", 20)
+			.attr("cy", 20)
+			.attr("r", 10);
 
-		vis.dot
-			.attr("visibility", "visible")
-
-	}
-
-		this.createLegend = function() {
-    	var vis = this;
-
-    	// create legend area
-	    vis.legend = d3.select("#legend").append("svg")
-	        .attr("width", "1100px")
-	        .attr("height", "80px");
-
-	    vis.plant_types = Object.keys(PLANT_COLORS);
+		vis.color_circle
+			.attr("fill", function(d) { return d; });
 	}
 
 	this.updateLegend = function() {
 		var vis = this;
 
+		var amounts;
+		var unit;
+		if(vis.attribute == "capacity") {
+			amounts = [2000, 500, 100];
+			unit = "MW";
+		}
+		else if(vis.attribute == "generation") {
+			amounts = [10, 5, 1];
+			unit = "MM MWh"
+		}
+		else {
+			amounts = [3, 1, .5];
+			unit = "MM tons"
+		}
+
 	    // create circles for power plant sizes
 	    var size_circles = vis.legend.selectAll(".size")
-	        .data([1000, 100, 10]);
+	        .data(amounts);
 
 	    size_circles
 	        .enter()
 	        .append("circle")
 	        .attr('class', 'size')
-	        .attr("cx", function(d, i){
-	        	return 100 + i * 100;
+	        .attr("cx", 40)
+	        .attr("cy", function(d, i){
+	        	return 40 + i * 70;
 	        })
-	        .attr("cy", 40);
+	        .attr("fill", "#555");
 
 	    size_circles
+	    	.transition()
+	    	.duration(DURATION_LENGTH)
 	        .attr("r", function(d) { return vis.getCircleSize(d); });
 	    
 	    // create text for power plant sizes
-	    var size_text = vis.legend.selectAll(".size-text")
-	        .data([1000, 100, 10])
-	        .enter()
+	    var size_text = vis.legend.selectAll("text")
+	        .data(amounts)
+	    
+	    size_text
+		    .enter()
 	        .append("text")
-	        .attr('class', 'size-text')
-	        .attr("x", function(d, i){
-	        	return 100 + i * 100;
-	        })
-	        .attr("y", 60)
-	        .text(function(d) { return d3.format("0,000")(d) + ' MW'; });
+	        .attr("x", 90)
+	        .attr("y", function(d, i){
+	        	return 40 + i * 70;
+	        });
+
+		size_text
+			.text(function(d) { return d3.format("0,000")(d) + " " + unit; });
 	}
 
 	// helper function for calculating the size of a circle based on attribute value and map zoom level
@@ -291,7 +290,7 @@ function Map() {
 			r = Math.sqrt(attr_val) / 5 * Math.pow(2, z);
 		}
 		else if(vis.attribute == "co2_emissions") {
-			r = Math.sqrt(attr_val) / 80 * Math.pow(2, z);
+			r = Math.sqrt(attr_val) / 3 * Math.pow(2, z);
 		}
 
 	    return r;
