@@ -52,7 +52,7 @@ function detail_draw(data)
 			.attr("dx", "-.8em")
 			.attr("dy", ".15em")
 			.attr("transform", function(d) {
-				return "rotate(-65)"
+				return "rotate(-90)"
 			});
 
 	    svgDetail.append("g")
