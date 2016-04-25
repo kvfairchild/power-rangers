@@ -2,146 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2cd707d7-2f89-45e8-8b6c-2710bbf972bd" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/.jshintrc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/.travis.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/GruntFile.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/LICENSE.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/bower.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/build/nv.d3.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/build/nv.d3.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/build/nv.d3.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/build/nv.d3.min.css.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/build/nv.d3.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/build/nv.d3.min.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/composer.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/TimeSeries.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/boxPlot.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/boxPlotCustomModel.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/bullet.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/bulletChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/candlestick.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/candlestickChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/cumulativeLineChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/discreteBarChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/documentation.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/donutChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/forceDirected.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/furiousLegend.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/historicalBar.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/historicalBarChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/images/background.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/images/body-background.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/images/bullet.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/images/hr.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/images/octocat-logo.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/legend.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/lib/colorbrewer.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/lib/stream_layers.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/line.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/lineChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/lineChartLogScale.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/lineChartSVGResize.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/linePlusBarChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/lineWithFocusChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/lineWithFocusChart_x2AxisLabel.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/miserables.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/monitoringChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/multiBarChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/multiBarChart2.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/multiBarHorizontalChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/multiChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/ohlc.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/ohlcChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/parallelCoordinates.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/parallelCoordinatesChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/pie.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/pieChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/scatter.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/scatterChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/scatterPlusLineChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/site.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/sparkline.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/sparklinePlus.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/stackedArea.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/stackedAreaChart.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/stylesheets/pygment_trac.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/stylesheets/styles.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/sunburst.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/examples/tooltip.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/meteor/export.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/package.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/core.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/axis.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/bars.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/boxplot.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/bullet.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/candlestick.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/forceDirectedGraph.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/furiousLegend.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/lineplusbar.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/lines.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/main.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/ohlc.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/parallelcoordinates.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/pie.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/scatter.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/sparkline.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/stackedarea.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/css/tooltip.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/dom.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/interactiveLayer.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/axis.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/boxPlot.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/boxPlotChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/bullet.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/bulletChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/candlestickBar.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/cumulativeLineChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/discreteBar.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/discreteBarChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/distribution.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/forceDirectedGraph.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/furiousLegend.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/historicalBar.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/historicalBarChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/legend.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/line.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/lineChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/linePlusBarChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/multiBar.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/multiBarChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/multiBarHorizontal.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/multiBarHorizontalChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/multiChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/ohlcBar.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/parallelCoordinates.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/parallelCoordinatesChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/pie.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/pieChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/scatter.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/scatterChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/sparkline.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/sparklinePlus.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/stackedArea.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/stackedAreaChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/sunburst.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/models/sunburstChart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/tooltip.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NVD3/src/utils.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/parallax.zip" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/annual_data.json" afterPath="$PROJECT_DIR$/data/annual_data.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/plant_info.json" afterPath="$PROJECT_DIR$/data/plant_info.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/filtercharts.js" afterPath="$PROJECT_DIR$/js/filtercharts.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/map.js" afterPath="$PROJECT_DIR$/js/map.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/powerplants.js" afterPath="$PROJECT_DIR$/js/powerplants.js" />
     </list>
     <ignored path="power-rangers.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -178,7 +41,7 @@
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-2.3529413">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -187,8 +50,8 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.584507">
-              <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
+            <state vertical-scroll-proportion="1.9542253">
+              <caret line="74" column="7" selection-start-line="74" selection-start-column="7" selection-end-line="74" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -216,10 +79,10 @@
         <option value="$PROJECT_DIR$/js/stackedAreaChart.js" />
         <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/js/filtercharts.js" />
-        <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/parallax/css/parallax_style.css" />
         <option value="$PROJECT_DIR$/parallax/parallax.html" />
+        <option value="$PROJECT_DIR$/css/style.css" />
       </list>
     </option>
   </component>
@@ -406,7 +269,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="13" y="23" width="1280" height="716" extended-state="1" />
+    <frame x="13" y="23" width="1280" height="716" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2484375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -457,9 +320,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="87" column="31" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="31" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -475,9 +336,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -501,9 +360,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="7" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -566,9 +423,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3634895">
           <caret line="99" column="19" selection-start-line="99" selection-start-column="19" selection-end-line="99" selection-end-column="19" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -585,7 +440,7 @@
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.3529413">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -608,8 +463,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.584507">
-          <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
+        <state vertical-scroll-proportion="1.9542253">
+          <caret line="74" column="7" selection-start-line="74" selection-start-column="7" selection-end-line="74" selection-end-column="7" />
           <folding />
         </state>
       </provider>

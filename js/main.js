@@ -35,7 +35,10 @@ var plant_type_chart;
 var capacity_chart;
 var year_chart;
 var year_built_chart;
+<<<<<<< HEAD
 var area_chart;
+=======
+>>>>>>> master
 
 // ***************************************
 // load the data and initialize the visualiations
