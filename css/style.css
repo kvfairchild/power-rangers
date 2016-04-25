@@ -287,10 +287,12 @@ circle.size {
 	z-index: 9999;
 }
 
-#windmill_preload{
+#windmill-preload{
 	position: relative;
-	left:0px;
-	top:-10px;
+	height: 400px;
+	width: 200px;
+	margin-left: 45%;
+	bottom: 60%;
 }
 
 /* Wind animation */
@@ -318,15 +320,18 @@ circle.size {
 
 .stand {
 	position: absolute;
-	top: 200px;
+	top: 250px;
 	height: 180px;
+	margin-top: -90px;
+	margin-left: -30px;
 }
 
 .blades {
 	position: absolute;
-	top: 135px;
-	left: 583px;
+	top: 185px;
 	height:145px;
+	margin-top: -90px;
+	margin-left: -70px;
 
 	/* Animation properties*/
 
