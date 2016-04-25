@@ -5,13 +5,15 @@ function PowerPlants(annual_data, plant_info) {
 	// **********************************
 	// data
 	this.data = annual_data;
-	this.annual_data = crossfilter(annual_data);
+	this.annual_data = crossfilter(annual_data.filter(function(p){
+		return p["plant_type"] != null;
+	}));
 	this.plant_info = plant_info;
 
 	// **********************************
 	// helpful variables
 	this.plant_types = Object.keys(PLANT_COLORS);
-	this.attribute = "capacity"; // capacity, generation, or co2_emissions
+	this.attribute; // capacity, generation, or co2_emissions
 
 	// **********************************
 	// create dimensions
@@ -37,6 +39,10 @@ function PowerPlants(annual_data, plant_info) {
 
 	this.state = this.annual_data.dimension(function (d) {
 		return d.state; // state or District of Columbia
+	});
+
+	this.year_built = this.annual_data.dimension(function (d) {
+		return d.min_year_built;
 	});
 
 	// **********************************
@@ -92,6 +98,7 @@ function PowerPlants(annual_data, plant_info) {
 	);
 
 	this.capacities = this.capacity.group();
+	this.year_builts = this.year_built.group();
 
 	// **********************************
 	// set functions
@@ -129,9 +136,13 @@ function PowerPlants(annual_data, plant_info) {
 		return this.getCapacityByYearType();
 	}
 
-	// get count of power plants for each capacity value
-	this.getCapacityValues = function() {
-		return this.capacities.all();
+	this.getDimensionValues = function(dimension) {
+		if(dimension == "capacity") {
+			return this.capacities.top(Infinity); // all();
+		}
+		else if(dimension == "year_built") {
+			return this.year_builts.all();
+		}
 	}
 
 	// get all power plants, ordered by capacity
@@ -152,9 +163,14 @@ function PowerPlants(annual_data, plant_info) {
 	// **********************************
 	// filter functions
 
-	// filter plants by capacity range
-	this.filterCapacity = function(extent) {
-		this.capacity.filterRange(extent);
+	// filter plants by capacity or by year built
+	this.filterDimension = function(extent, dimension) {
+		if(dimension == "capacity") {
+			this.capacity.filterRange(extent);
+		}
+		else if(dimension == "year_built") {
+			this.year_built.filterRange(extent);
+		}
 	}
 
 	// filter plants by plant type
