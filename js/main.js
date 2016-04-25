@@ -37,6 +37,21 @@ var year_chart;
 var year_built_chart;
 var area_chart;
 
+
+// ***************************************
+// preloader
+
+$(document).ready(function(){
+
+	// calculate height
+	var screen_ht = $(window).height();
+	var preloader_ht = 5;
+	var padding =(screen_ht/2)-preloader_ht;
+
+	$("#preloader").css("padding-top",padding+"px");
+
+});
+
 // ***************************************
 // load the data and initialize the visualiations
 queue()

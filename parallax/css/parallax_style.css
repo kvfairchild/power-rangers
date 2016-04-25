@@ -229,7 +229,6 @@ img{
 	padding:5px;
 	display:none;
 	color:#fff;
-	box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
 }
 
 /* Wind animation */
@@ -259,7 +258,6 @@ img{
 	position: relative;
 	height: 758px;
 }
-
 
 .stand {
 	position: absolute;
