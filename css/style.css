@@ -50,6 +50,7 @@ p a:hover {
 }
 
 /* ======================================== */
+
 /* filtering section area */
 
 div.filterBy {
@@ -80,6 +81,7 @@ label {
 select.form-control {
 	display: inline;
 	width: auto;
+	font-size: 1em;
 }
 
 p.filterLabel {
