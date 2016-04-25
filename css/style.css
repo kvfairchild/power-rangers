@@ -1,17 +1,9 @@
 /* ======================================== */
 /* fonts */
 
-
 @font-face {
 	font-family: "Eurostile";
 	src: url("../fonts/eurostile-webfont.woff") format('truetype');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: "Calibri";
-	src: url("../fonts/calibri-webfont.woff") format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -145,6 +137,7 @@ div.tooltip {
 /* plant details */
 
 #tooltip {
+	position: relative;
 	text-align:center;
 	padding: 10px;
 	border: solid 1px gray;
@@ -159,6 +152,14 @@ div.tooltip {
 	fill: none;
 	stroke: blue;
 	stroke-width: 2px;
+}
+
+#plant-color{
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	top: -180px;
+	right: 90%;
 }
 
 #gen_commenced{
@@ -187,10 +188,6 @@ div.tooltip {
   stroke-width: 1px;
 }
 
-circle.size {
-	fill: #ddd;
-}
-
 #site-name-row {
   margin-top: 5px;
   margin-bottom:0;
@@ -200,17 +197,19 @@ circle.size {
 /* ======================================== */
 /* legend */
 
+#legend {
+	position: absolute;
+	top: 300px;
+	background-color: rgba(255, 255, 255, 0.75);
+}
+
 #legend text {
 	alignment-baseline: middle;
 	font-size: 14px;
 }
 
-#legend text. {
+#legend text {
 	text-anchor: start;
-}
-
-#legend text.size-text {
-	text-anchor: middle;
 }
 
 /* ======================================== */
@@ -282,15 +281,24 @@ circle.size {
 	top:0px;
 	width:100%;
 	height:100%;
-	text-align:center;
 	color:black;
 	z-index: 9999;
 }
 
-#windmill_preload{
+#windmill-preload{
 	position: relative;
-	left:0px;
-	top:-10px;
+	height: 400px;
+	width: 200px;
+	margin-left: 50%;
+	bottom: 60%;
+}
+
+#load-text{
+	position: absolute;
+	font-family: Eurostile;
+	font-size: 20px;
+	margin-top: 375px;
+	margin-left: -30px;
 }
 
 /* Wind animation */
@@ -318,15 +326,18 @@ circle.size {
 
 .stand {
 	position: absolute;
-	top: 200px;
+	top: 225px;
 	height: 180px;
+	margin-top: -90px;
+	margin-left: -30px;
 }
 
 .blades {
 	position: absolute;
-	top: 135px;
-	left: 583px;
+	top: 160px;
 	height:145px;
+	margin-top: -90px;
+	margin-left: -70px;
 
 	/* Animation properties*/
 

@@ -9,7 +9,7 @@ var DURATION_LENGTH = 800;
 var PLANT_COLORS = {
 	"Coal": "#23527c", // "dk blue",
 	"Gas": "#b2df8a", // "lt green",
-	"Solar": "#ffff99", // "lt yellow",
+	"Solar": " #ffff00", // "yellow",
 	"Other": "#e31a1c", // "red",
 	"Oil": "#ff7f00", // "orange",
 	"Nuclear": "#fb9a99", // "pink",
@@ -21,7 +21,7 @@ var PLANT_COLORS = {
 var ATTRIBUTE_LABELS = {
 	"capacity": "capacity in MW",
 	"generation": "generation in millions of MWh",
-	"co2_emissions": "carbon dioxide emissions in thousands of short tons"
+	"co2_emissions": "carbon dioxide emissions in millions of short tons"
 };
 
 // opacity used for plant circles / bars / etc
@@ -115,6 +115,7 @@ function resizeAllVis() {
 	plant_type_chart.resizeVis();
 	capacity_chart.resizeVis();
 	year_built_chart.resizeVis();
+	area_chart.resizeVis();
 }
 
 d3.select(window).on('resize', resizeAllVis); 
@@ -140,5 +141,6 @@ $("#sizeBy").change(function() {
 
 $("#selState").change(function() {
     plants.filterState(this.value);
-    updateAllVis("all");
+    if(this.value != "all") { map.zoomToState(this.value); } // changing the map view automatically updates all visualizations
+    else { updateAllVis("all"); }
 });
