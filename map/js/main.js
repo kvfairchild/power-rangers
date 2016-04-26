@@ -52,6 +52,13 @@ $(document).ready(function(){
 
 });
 
+function hide_preloader() {
+	// To stop the preloader
+	// To apply Fade Out Effect to the Preloader
+	$("#preloader").delay(3000).fadeOut(1000);
+	$("#main").delay(3000).css({"visibility": "visible"}).fadeIn(1000);
+}
+
 // ***************************************
 // load the data and initialize the visualiations
 queue()
@@ -94,6 +101,8 @@ queue()
 
 		area_chart = new StackedAreaChart();
 		area_chart.initVis();
+
+		hide_preloader();
 
 	});
 

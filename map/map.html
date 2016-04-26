@@ -9,22 +9,11 @@
 
 	<script src="js/lib/jquery-1.12.3.min.js"></script>
 
-	<!-- Script to hide preloader -->
-	<script type="text/javascript">
-
-		function hide_preloader() {
-			// To stop the preloader
-			// To apply Fade Out Effect to the Preloader
-			$("#preloader").delay(3000).fadeOut(1000);
-		}
-
-	</script>
-
 </head>
-<body onload="hide_preloader()">
+<body>
 
 	<!-- Main Site -->
-	<div class="container-fluid">
+	<div id="main" class="container-fluid" style="visibility: hidden">
 	<div class="row" style="padding:10px;">
 		<div id="controls" class="col-md-3">
 			<div class="row">
