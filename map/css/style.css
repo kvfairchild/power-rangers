@@ -126,7 +126,9 @@ div.tooltip {
 /* ======================================== */
 /* plant-specific area */
 
-
+.detail-area{
+	position: relative;
+}
 /* intro div */
 
 #intro-div {
@@ -146,6 +148,7 @@ div.tooltip {
 	-webkit-box-shadow: inset 0 0 2px #000000;
 	box-shadow: inset 0 0 2px #000000;
 	overflow: hidden;
+	min-height: 200px;
 }
 
 #tooltip .line{
@@ -158,8 +161,8 @@ div.tooltip {
 	position: absolute;
 	width: 50px;
 	height: 50px;
-	top: -180px;
-	right: 90%;
+	top: 62px;
+	left: 150px
 }
 
 #gen_commenced{
@@ -349,5 +352,68 @@ div.tooltip {
 	-o-animation: bladeSpin 10s ease-in-out infinite;
 	/* general syntax */
 	animation: bladeSpin 10s ease-in-out infinite;
+
+}
+
+/**
+ * Note that the following media queries are intended to be used for the specified device or screen size
+ * in both portrait and landscape mode.
+ *
+ * Desktop queries are not provided since the default styles for most sites and applications typically focus
+ * on that for the default sites.
+ *
+ * Contributes, comments, and all that fun stuff always welcome :).
+ */
+
+/* iPhone */
+@media (min-width: 320px) and (max-width: 480px) {
+
+}
+
+/* iPhone 5 */
+@media (min-width: 320px) and (max-width: 568px) {
+
+}
+
+/* Tablet */
+@media (min-width: 600px) and (max-width: 800px) {
+
+}
+
+/* iPad 2, 3, mini */
+@media (min-width: 768px) and (max-width: 1024px) {
+	#tooltip{
+		min-height: 410px;
+	}
+
+	#intro-div {
+		margin-top: 90px;
+	}
+
+	h1 {
+		font-size: 42px;
+	}
+
+	p.intro {
+		font-size: 22px;
+	}
+
+	#plant-color {
+		position: absolute;
+		width: 50px;
+		height: 50px;
+		top: 62px;
+		left: 350px;
+	}
+
+	#tooltip-data .col-md-8 {
+		width: 50%;
+		float: left;
+	}
+
+
+	div#tooltip-chart {
+		margin-top: 40px;
+	}
 
 }

@@ -1,209 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Power Plant Explorer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Power Plant Parallax</title>
 
-	<link rel="stylesheet" type="text/css" href="css/leaflet.css">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+<link href="parallax/css/parallax_style.css" rel="stylesheet" type="text/css" />
+<link href="parallax/css/skeleton.css" rel="stylesheet" type="text/css" />
+<link href="//db.onlinewebfonts.com/c/a5c249a89101d5a2440a92df3d4ee188?family=Eurostile+LT+Condensed" rel="stylesheet" type="text/css"/>
 
-	<script src="js/lib/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="parallax/scripts/graphpreview.js"></script>
+<script type="text/javascript" src="parallax/scripts/jquery.parallax-1.1.3.js"></script>
+<script type="text/javascript" src="parallax/scripts/jquery.localscroll-1.2.7-min.js"></script>
+<script type="text/javascript" src="parallax/scripts/jquery.scrollTo-1.4.2-min.js"></script>
+	<script type="text/javascript" src="parallax/scripts/smoothscroll.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
 
-	<!-- Script to hide preloader -->
-	<script type="text/javascript">
+	$('#nav').localScroll(800);
 
-		function hide_preloader() {
-			// To stop the preloader
-			// To apply Fade Out Effect to the Preloader
-			$("#preloader").delay(3000).fadeOut(1000);
-		}
+	//.parallax(xPosition, speedFactor, outerHeight) options:
+	//xPosition - Horizontal position of the element
+	//inertia - speed to move relative to vertical scroll. Example: 0.1 is one tenth the speed of scrolling, 2 is twice the speed of scrolling
+	//outerHeight (true/false) - Whether or not jQuery should use it's outerHeight option to determine when a section is in the viewport
+	$('#intro').parallax("50%", 0.1);
+	$('#second').parallax("50%", 0.1);
+	$('.bg').parallax("50%", 0.4);
+	$('#third').parallax("50%", 0.3);
 
-	</script>
-
+})
+</script>
 </head>
-<body onload="hide_preloader()">
 
-	<!-- Main Site -->
-	<div class="container-fluid">
-	<div class="row" style="padding:10px;">
-		<div id="controls" class="col-md-3">
-			<div class="row">
-				<label>Select the year to view:</label>
-				<div id = "year-controls">
-					<div id="stacked-area-chart"></div>
-					<div id="year-chart"></div>
-				</div>
-				<div>
-					<label class="select">Size by:</label>
-					<select class="form-control" id="sizeBy">
-						<option value="capacity">Capacity</option>
-						<option value="generation">Generation</option>
-						<option value="co2_emissions">CO2 Emissions</option>
-					</select>
-				</div>
+<body>
+	<ul id="nav">
+		<li><a href="#intro" title="Home"><img src="parallax/images/dot.png" alt="Link" /></a></li>
+	    <li><a href="#second" title="Intro"><img src="parallax/images/dot.png" alt="Link" /></a></li>
+	    <li><a href="#third" title="Gas vs. Coal"><img src="parallax/images/dot.png" alt="Link" /></a></li>
+		<li><a href="#fourth" title="Renewables"><img src="parallax/images/dot.png" alt="Link" /></a></li>
+	    <li><a href="#fifth" title="Map"><img src="parallax/images/dot.png" alt="Link" /></a></li>
+		<li><a href="parallax/processbook.html" title="Process Book"><img id = "book" src="parallax/images/book.png" alt="Link" /></a></li>
+	</ul>
 
-				<label>Filter by:</label>
-			
-				<div class="filterBy">
-					<div>
-						<label>State:</label>
-						<select class="form-control" id="selState">
-							<option value="all">All</option>
-							<option value="AL">Alabama</option>
-							<option value="AK">Alaska</option>
-							<option value="AZ">Arizona</option>
-							<option value="AR">Arkansas</option>
-							<option value="CA">California</option>
-							<option value="CO">Colorado</option>
-							<option value="CT">Connecticut</option>
-							<option value="DE">Delaware</option>
-							<option value="FL">Florida</option>
-							<option value="GA">Georgia</option>
-							<option value="HI">Hawaii</option>
-							<option value="ID">Idaho</option>
-							<option value="IL">Illinois</option>
-							<option value="IN">Indiana</option>
-							<option value="IA">Iowa</option>
-							<option value="KS">Kansas</option>
-							<option value="KY">Kentucky</option>
-							<option value="LA">Louisiana</option>
-							<option value="ME">Maine</option>
-							<option value="MD">Maryland</option>
-							<option value="MA">Massachusetts</option>
-							<option value="MI">Michigan</option>
-							<option value="MN">Minnesota</option>
-							<option value="MS">Mississippi</option>
-							<option value="MO">Missouri</option>
-							<option value="MT">Montana</option>
-							<option value="NE">Nebraska</option>
-							<option value="NV">Nevada</option>
-							<option value="NH">New Hampshire</option>
-							<option value="NJ">New Jersey</option>
-							<option value="NM">New Mexico</option>
-							<option value="NY">New York</option>
-							<option value="NC">North Carolina</option>
-							<option value="ND">North Dakota</option>
-							<option value="OH">Ohio</option>
-							<option value="OK">Oklahoma</option>
-							<option value="OR">Oregon</option>
-							<option value="PA">Pennsylvania</option>
-							<option value="RI">Rhode Island</option>
-							<option value="SC">South Carolina</option>
-							<option value="SD">South Dakota</option>
-							<option value="TN">Tennessee</option>
-							<option value="TX">Texas</option>
-							<option value="UT">Utah</option>
-							<option value="VT">Vermont</option>
-							<option value="VA">Virginia</option>
-							<option value="WA">Washington</option>
-							<option value="WV">West Virginia</option>
-							<option value="WI">Wisconsin</option>
-							<option value="WY">Wyoming</option>
-						</select>
-					</div>
-
-					<label>Type of Plant</label>
-					<p id="plant-type-label" class="filterLabel"></p>
-					<div id="plant-type"></div>
-					
-					<label>Capacity (MW)</label>
-					<p class="filterLabel">one line for each plant</p>
-					<div id="capacity"></div>
-
-					<label>Year Built</label>
-					<div id="year_built"></div>
-					
-				</div>
-
-			</div>
-		</div>
-		<div class="col-md-9">
-			<div class="row">
-				<div id="map" style="width: 100%; height: 500px"></div>
-				<div id="legend"></div>
-			</div>
-			<div class="row" style="padding:10px;">
-				<div id='tooltip' style="height:200px;">
-					<div id = "intro-div">
-						<h1>Welcome to the Power Plant Explorer!</h1>
-						<br>
-						<p>Each circle represents a power plant.</p>
-						<p><b>Hover</b> over a circle to learn more about a specific plant.</p>
-						<p>Select options from the dashboard on the left to <b>filter</b>.</p>
-						<p><b>Zoom</b> in or out with the arrows in the top left corner of the map.</p>
-					</div>
-					<div class="row">
-						<div id='tooltip-data' class="col-md-6">
-							<div class = "col-md-12">
-								<div id = "plant-color"></div>
-								<h2 id="plant_name"></h2>
-								<h3 id="gen_commenced"></h3>
-							</div>
-							<div class = "col-md-8">
-								<p id = "address"><br>
-								<p id = "city_state"></p>
-							</div>
-							<div class = "col-md-4">
-								<p id="inst_cap"></p>
-								<p id="tech_type"></p>
-							</div>
-						</div>
-						<div id='tooltip-chart' class="col-md-6"></div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-	</div>
-
-	<!-- external libraries -->
-    <script src="js/lib/d3.v3.min.js" charset="utf-8"></script>
-    <script src="js/lib/d3.tip.js"></script>
-	<script src="js/lib/queue.v1.min.js"></script>
-	<script src="js/lib/crossfilter.min.js"></script>
-    <script src="js/lib/leaflet.js"></script>
-    <!--<script src="js/lib/bootstrap.min.js"></script>-->
-
-	<!-- class to help with filtering -->
-	<script src="js/powerplants.js"></script>
-
-	<!-- map -->
-	<script src="js/map.js"></script>
-
-	<!-- visualizations -->
-	<script src="js/filtercharts.js"></script>
-	<script src="js/plantDetailChart.js"></script>
-
-	<!-- create visualizations -->
-	<script src="js/main.js"></script>
+	<div id="intro" class="row">
+		<div class="story">
+	    	<div class="center">
+			<h1>Power Plant Explorer</h1>
+	        <h2>Scroll to explore the landscape of power production in the United States.</h2>
+				<a href = "#second" class = "smoothScroll"> <img class = "button" id = "scroll-button" src = "parallax/images/scrolldown.png"></a>
+	        </div>
+			<p class = "narrative">or click here <a href = "map/map.html"><img class = "button" id = "shortcut-map" src="parallax/images/mapstar.png"></a> to visit the interactive map</p>
+		</div> <!--.story-->
+	</div> <!--#intro-->
 	
-</body>
-
-<!-- Preloader -->
-<div id = "preloader">
-	<div id = "windmill-preload">
-		<img class="blades" src="parallax/images/powers/blades.png" />
-		<img class="stand" src="parallax/images/powers/stand.png" />
-
-		<div id = "load-text"> Loading
-
-			<span id="wait"></span>
-
-			<script>
-				var dots = window.setInterval( function() {
-					var wait = document.getElementById("wait");
-					if ( wait.innerHTML.length > 4 )
-						wait.innerHTML = " ";
-					else
-						wait.innerHTML += ". ";
-				}, 350);
-			</script>
-
+	<div id="second" class="row">
+		<div class="columns six">
+		<div class="story"><div class="bg"></div>
+			<img id="cloud-1" src = "parallax/images/clouds/cloud-2.png">
+	    </div> <!--.story-->
+		<a href="parallax/images/graphs/graph-1.png" class = "preview"><img class = "float-left" src = "parallax/images/clouds/cloud-3.png"></a>
 		</div>
+			<!--Wind animation modified from DWUser.com-->
+		<div class=" columns six">
+			<div id="wind-animation">
+				<img class="blades" src="parallax/images/powers/blades.png"/>
+				<img class="stand" src="parallax/images/powers/stand.png"/>
+			</div>
+		</div>
+	</div> <!--#second-->
+	
+	<div id="third" class="row">
+		<div class=" columns six">
+			<img id = "cloud-fill-1" src="parallax/images/clouds/cloud-fill.png"/>
+			<img class="float-left" src="parallax/images/powers/nuclear.png"/>
+		</div>
+		<div class=" columns six">
+		<div class="story"><div class="bg"></div>
+				<img src = "parallax/images/clouds/cloud-4.png">
+		</div> <!--.story-->
+		<a href="parallax/images/graphs/graph-2.png" class = "preview"><img class = "slight-right" src = "parallax/images/clouds/cloud-5.png"></a>
+			<img id = "balloon" src = "parallax/images/powers/balloon.png">
+			<img id = "cloud-fill-2" src = "parallax/images/clouds/cloud-fill-2.png">
+		</div>
+	</div> <!--#third-->
 
-	</div>
-</div>
-
-
+	<div id="fourth" class="row">
+		<div class=" columns six">
+		<div class="story"><div class="bg"></div>
+			<a href="parallax/images/graphs/graph-3.png" class = "preview"><img src = "parallax/images/clouds/cloud-6.png"></a>
+		</div> <!--.story-->
+			<div class="story">
+				<img id = "cloud-8" src = "parallax/images/clouds/cloud-8.png">
+			</div>
+		</div>
+		<div class=" columns six">
+			<a href="parallax/images/graphs/graph-4.png" class = "preview"><img id="cloud-7" class = "float-left" src = "parallax/images/clouds/cloud-7.png"></a>
+		</div>
+	</div> <!--#fourth-->
+	
+	<div id="fifth" class="row">
+		<div class="story">
+			<div class="center">
+				<h2>Click the star to visit the interactive map</h2>
+				<a href = "map/map.html"> <img class = "button" id = "map-star" src = "parallax/images/mapstar.png""></a>
+			</div>
+		</div> <!--.story-->
+	</div> <!--#fifth-->
+</body>
 </html>
