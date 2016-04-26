@@ -1,110 +1,107 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Power Plant Parallax</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Power Plant Parallax</title>
 
-<link href="parallax/css/parallax_style.css" rel="stylesheet" type="text/css" />
-<link href="parallax/css/skeleton.css" rel="stylesheet" type="text/css" />
-<link href="//db.onlinewebfonts.com/c/a5c249a89101d5a2440a92df3d4ee188?family=Eurostile+LT+Condensed" rel="stylesheet" type="text/css"/>
+    <link href="parallax/css/parallax_style.css" rel="stylesheet" type="text/css" />
+    <link href="parallax/css/skeleton.css" rel="stylesheet" type="text/css" />
+    <link href="//db.onlinewebfonts.com/c/a5c249a89101d5a2440a92df3d4ee188?family=Eurostile+LT+Condensed" rel="stylesheet" type="text/css"/>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-<script type="text/javascript" src="parallax/scripts/graphpreview.js"></script>
-<script type="text/javascript" src="parallax/scripts/jquery.parallax-1.1.3.js"></script>
-<script type="text/javascript" src="parallax/scripts/jquery.localscroll-1.2.7-min.js"></script>
-<script type="text/javascript" src="parallax/scripts/jquery.scrollTo-1.4.2-min.js"></script>
-	<script type="text/javascript" src="parallax/scripts/smoothscroll.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-
-	$('#nav').localScroll(800);
-
-	//.parallax(xPosition, speedFactor, outerHeight) options:
-	//xPosition - Horizontal position of the element
-	//inertia - speed to move relative to vertical scroll. Example: 0.1 is one tenth the speed of scrolling, 2 is twice the speed of scrolling
-	//outerHeight (true/false) - Whether or not jQuery should use it's outerHeight option to determine when a section is in the viewport
-	$('#intro').parallax("50%", 0.1);
-	$('#second').parallax("50%", 0.1);
-	$('.bg').parallax("50%", 0.4);
-	$('#third').parallax("50%", 0.3);
-
-})
-</script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="parallax/scripts/graphpreview.js"></script>
+    <script type="text/javascript" src="parallax/scripts/jquery.parallax-1.1.3.js"></script>
+    <script type="text/javascript" src="parallax/scripts/jquery.localscroll-1.2.7-min.js"></script>
+    <script type="text/javascript" src="parallax/scripts/jquery.scrollTo-1.4.2-min.js"></script>
+    <script type="text/javascript" src="parallax/scripts/smoothscroll.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#nav').localScroll(800);
+            //.parallax(xPosition, speedFactor, outerHeight) options:
+            //xPosition - Horizontal position of the element
+            //inertia - speed to move relative to vertical scroll. Example: 0.1 is one tenth the speed of scrolling, 2 is twice the speed of scrolling
+            //outerHeight (true/false) - Whether or not jQuery should use it's outerHeight option to determine when a section is in the viewport
+            $('#intro').parallax("50%", 0.1);
+            $('#second').parallax("50%", 0.1);
+            $('.bg').parallax("50%", 0.4);
+            $('#third').parallax("50%", 0.3);
+        })
+    </script>
 </head>
 
 <body>
-	<ul id="nav">
-		<li><a href="#intro" title="Home"><img src="parallax/images/dot.png" alt="Link" /></a></li>
-	    <li><a href="#second" title="Intro"><img src="parallax/images/dot.png" alt="Link" /></a></li>
-	    <li><a href="#third" title="Gas vs. Coal"><img src="parallax/images/dot.png" alt="Link" /></a></li>
-		<li><a href="#fourth" title="Renewables"><img src="parallax/images/dot.png" alt="Link" /></a></li>
-	    <li><a href="#fifth" title="Map"><img src="parallax/images/dot.png" alt="Link" /></a></li>
-		<li><a href="parallax/processbook.html" title="Process Book"><img id = "book" src="parallax/images/book.png" alt="Link" /></a></li>
-	</ul>
+<ul id="nav">
+    <li><a href="#intro" title="Home"><img src="parallax/images/dot.png" alt="Link" /></a></li>
+    <li><a href="#second" title="Intro"><img src="parallax/images/dot.png" alt="Link" /></a></li>
+    <li><a href="#third" title="Gas vs. Coal"><img src="parallax/images/dot.png" alt="Link" /></a></li>
+    <li><a href="#fourth" title="Renewables"><img src="parallax/images/dot.png" alt="Link" /></a></li>
+    <li><a href="#fifth" title="Map"><img src="parallax/images/dot.png" alt="Link" /></a></li>
+    <li><a href="parallax/processbook.html" title="Process Book"><img id = "book" src="parallax/images/book.png" alt="Link" /></a></li>
+</ul>
 
-	<div id="intro" class="row">
-		<div class="story">
-	    	<div class="center">
-			<h1>Power Plant Explorer</h1>
-	        <h2>Scroll to explore the landscape of power production in the United States.</h2>
-				<a href = "#second" class = "smoothScroll"> <img class = "button" id = "scroll-button" src = "parallax/images/scrolldown.png"></a>
-	        </div>
-			<p class = "narrative">or click here <a href = "map/map.html"><img class = "button" id = "shortcut-map" src="parallax/images/mapstar.png"></a> to visit the interactive map</p>
-		</div> <!--.story-->
-	</div> <!--#intro-->
-	
-	<div id="second" class="row">
-		<div class="columns six">
-		<div class="story"><div class="bg"></div>
-			<img id="cloud-1" src = "parallax/images/clouds/cloud-2.png">
-	    </div> <!--.story-->
-		<a href="parallax/images/graphs/graph-1.png" class = "preview"><img class = "float-left" src = "parallax/images/clouds/cloud-3.png"></a>
-		</div>
-			<!--Wind animation modified from DWUser.com-->
-		<div class=" columns six">
-			<div id="wind-animation">
-				<img class="blades" src="parallax/images/powers/blades.png"/>
-				<img class="stand" src="parallax/images/powers/stand.png"/>
-			</div>
-		</div>
-	</div> <!--#second-->
-	
-	<div id="third" class="row">
-		<div class=" columns six">
-			<img id = "cloud-fill-1" src="parallax/images/clouds/cloud-fill.png"/>
-			<img class="float-left" src="parallax/images/powers/nuclear.png"/>
-		</div>
-		<div class=" columns six">
-		<div class="story"><div class="bg"></div>
-				<img src = "parallax/images/clouds/cloud-4.png">
-		</div> <!--.story-->
-		<a href="parallax/images/graphs/graph-2.png" class = "preview"><img class = "slight-right" src = "parallax/images/clouds/cloud-5.png"></a>
-			<img id = "balloon" src = "parallax/images/powers/balloon.png">
-			<img id = "cloud-fill-2" src = "parallax/images/clouds/cloud-fill-2.png">
-		</div>
-	</div> <!--#third-->
+<div id="intro" class="row">
+    <div class="story">
+        <div class="center">
+            <h1>Power Plant Explorer</h1>
+            <h2>Scroll to explore the landscape of power production in the United States.</h2>
+            <a href = "#second" class = "smoothScroll"> <img class = "button" id = "scroll-button" src = "parallax/images/scrolldown.png"></a>
+        </div>
+        <p class = "narrative">or click here <a href = "map/map.html"><img class = "button" id = "shortcut-map" src="parallax/images/mapstar.png"></a> to visit the interactive map</p>
+    </div> <!--.story-->
+</div> <!--#intro-->
 
-	<div id="fourth" class="row">
-		<div class=" columns six">
-		<div class="story"><div class="bg"></div>
-			<a href="parallax/images/graphs/graph-3.png" class = "preview"><img src = "parallax/images/clouds/cloud-6.png"></a>
-		</div> <!--.story-->
-			<div class="story">
-				<img id = "cloud-8" src = "parallax/images/clouds/cloud-8.png">
-			</div>
-		</div>
-		<div class=" columns six">
-			<a href="parallax/images/graphs/graph-4.png" class = "preview"><img id="cloud-7" class = "float-left" src = "parallax/images/clouds/cloud-7.png"></a>
-		</div>
-	</div> <!--#fourth-->
-	
-	<div id="fifth" class="row">
-		<div class="story">
-			<div class="center">
-				<h2>Click the star to visit the interactive map</h2>
-				<a href = "map/map.html"> <img class = "button" id = "map-star" src = "parallax/images/mapstar.png""></a>
-			</div>
-		</div> <!--.story-->
-	</div> <!--#fifth-->
+<div id="second" class="row">
+    <div class="columns six">
+        <div class="story"><div class="bg"></div>
+            <img id="cloud-1" src = "parallax/images/clouds/cloud-2.png">
+        </div> <!--.story-->
+        <a href="parallax/images/graphs/graph-1.png" class = "preview"><img class = "float-left" src = "parallax/images/clouds/cloud-3.png"></a>
+    </div>
+    <!--Wind animation modified from DWUser.com-->
+    <div class=" columns six">
+        <div id="wind-animation">
+            <img class="blades" src="parallax/images/powers/blades.png"/>
+            <img class="stand" src="parallax/images/powers/stand.png"/>
+        </div>
+    </div>
+</div> <!--#second-->
+
+<div id="third" class="row">
+    <div class=" columns six">
+        <img id = "cloud-fill-1" src="parallax/images/clouds/cloud-fill.png"/>
+        <img class="float-left" src="parallax/images/powers/nuclear.png"/>
+    </div>
+    <div class=" columns six">
+        <div class="story"><div class="bg"></div>
+            <img src = "parallax/images/clouds/cloud-4.png">
+        </div> <!--.story-->
+        <a href="parallax/images/graphs/graph-2.png" class = "preview"><img class = "slight-right" src = "parallax/images/clouds/cloud-5.png"></a>
+        <img id = "balloon" src = "parallax/images/powers/balloon.png">
+        <img id = "cloud-fill-2" src = "parallax/images/clouds/cloud-fill-2.png">
+    </div>
+</div> <!--#third-->
+
+<div id="fourth" class="row">
+    <div class=" columns six">
+        <div class="story"><div class="bg"></div>
+            <a href="parallax/images/graphs/graph-3.png" class = "preview"><img src = "parallax/images/clouds/cloud-6.png"></a>
+        </div> <!--.story-->
+        <div class="story">
+            <img id = "cloud-8" src = "parallax/images/clouds/cloud-8.png">
+        </div>
+    </div>
+    <div class=" columns six">
+        <a href="parallax/images/graphs/graph-4.png" class = "preview"><img id="cloud-7" class = "float-left" src = "parallax/images/clouds/cloud-7.png"></a>
+    </div>
+</div> <!--#fourth-->
+
+<div id="fifth" class="row">
+    <div class="story">
+        <div class="center">
+            <h2>Click the star to visit the interactive map</h2>
+            <a href = "map/map.html"> <img class = "button" id = "map-star" src = "parallax/images/mapstar.png""></a>
+        </div>
+    </div> <!--.story-->
+</div> <!--#fifth-->
 </body>
 </html>
