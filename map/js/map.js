@@ -134,13 +134,15 @@ function Map() {
 	        .on("mouseover", function(d) {
 				d3.select("#intro-div")
 					.attr("hidden", true);
-				d3.select("#details-table")
+				d3.select("#tooltip-data")
+					.attr("hidden", null);
+				d3.select("#plant-color")
 					.attr("hidden", null);
 				d3.select(this)
 					.attr("opacity", 1);
 
 				// update plant detail dot
-				// vis.updateDetailDot(PLANT_COLORS[d["plant_type"]]);
+				vis.updateDetailDot(PLANT_COLORS[d["plant_type"]]);
 
 	        	// update plant-specific information
 				var plant = plants.getPlant(d["plant_id"]);
@@ -162,7 +164,7 @@ function Map() {
 	        .on("mouseout", function(d) {
 				d3.select("#intro-div")
 					.attr("hidden", null);
-				d3.select("#details-table")
+				d3.select("#plant-color")
 					.attr("hidden", true);
 	        	d3.select(this)
 					.attr("opacity", 0.75);

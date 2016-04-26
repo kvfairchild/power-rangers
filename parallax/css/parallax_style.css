@@ -13,14 +13,14 @@ License: http://creativecommons.org/licenses/by-sa/3.0/ (Attribution Share Alike
 
 @font-face {
 	font-family: "Eurostile";
-	src: url("../../fonts/eurostile-webfont.woff") format('truetype');
+	src: url("../../map/fonts/eurostile-webfont.woff") format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: "Calibri";
-	src: url("../../fonts/calibri-webfont.woff") format('truetype');
+	src: url("../../map/fonts/calibri-webfont.woff") format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
