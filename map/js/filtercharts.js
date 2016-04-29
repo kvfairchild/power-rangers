@@ -485,11 +485,11 @@ function YearChart() {
 		var vis = this;
 
 		// contains plant attributes by year
-		var data = plants.getAttributeByYearType();
+		// var data = plants.getAttributeByYearType();
 
 		// create chart area
 		vis.margin = {top: -5, right: 20, bottom: 30, left: 60};
-    	vis.width = 320 - vis.margin.left - vis.margin.right;
+    	vis.width = parseInt(d3.select('#year-chart').style('width'), 10) - vis.margin.left - vis.margin.right;
     	vis.height = 50 - vis.margin.top - vis.margin.bottom;
 
 		vis.svg = d3.select("#year-chart").append("svg")
@@ -505,7 +505,7 @@ function YearChart() {
 		    .clamp(true);
 
 		vis.yScale = d3.scale.linear()
-			.range([vis.height, 0])
+			.range([vis.height, 0]);
 
 		vis.brush = d3.svg.brush()
 		    .x(vis.xScale)
@@ -513,18 +513,17 @@ function YearChart() {
 		    .on("brush", brushed)
 		    .on("brushend", brushend);
 
-		vis.svg.append("g")
+		vis.xAxis = d3.svg.axis()
+			.scale(vis.xScale)
+			.orient("bottom")
+			.tickFormat(d3.format("d"))
+			.tickSubdivide(0)
+			.ticks(6 - 1);
+
+		vis.xAxisVisual = vis.svg.append("g")
 		    .attr("class", "x axis")
 		    .attr("transform", "translate(0," + vis.height / 2 + ")")
-		    .call(d3.svg.axis()
-				.scale(vis.xScale)
-				.orient("bottom")
-				.tickFormat(d3.format("d"))
-				.tickSubdivide(0)
-				.ticks(6 - 1)) // CHANGE THIS
-			.select(".domain")
-			.select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-				.attr("class", "halo");
+		    .call(vis.xAxis);
 
 		vis.slider = vis.svg.append("g")
 			.attr("class", "slider")
@@ -570,10 +569,28 @@ function YearChart() {
 		}
 	}
 
-	this.updateVis = function() {
+	this.resizeVis = function() {
 		var vis = this;
-	}
 
+		// resize based on width of container
+		// http://eyeseast.github.io/visible-data/2013/08/28/responsive-charts-with-d3/
+		vis.width = parseInt(d3.select('#year-chart').style('width'), 10) - vis.margin.left - vis.margin.right;
+		
+		vis.xScale
+			.range([0, vis.width]);
+
+		d3.select(vis.svg.node().parentNode) // svg element
+	        .style('width', (vis.width + vis.margin.left + vis.margin.right) + 'px');
+
+	    vis.xAxis
+    		.scale(vis.xScale);
+
+  		vis.xAxisVisual
+			.call(vis.xAxis);
+
+		vis.handle
+			.attr("cx", vis.xScale(plants.getYearVal()));
+	}
 }
 
 // stacked area chart
@@ -583,211 +600,172 @@ function StackedAreaChart() {
 	this.initVis = function() {
 		var vis = this;
 
-		// Set ordinal color scale
-		vis.colorScale = d3.scale.ordinal()
-			.domain((function (d) {
-				arr = [];
-				for (key in PLANT_COLORS) {
-					arr.push(key);
+		// Initialize visualization (static content, e.g. SVG area or axes)
+		vis.margin = {top: 40, right: 20, bottom: 5, left: 60};
+
+		vis.width = parseInt(d3.select('#stacked-area-chart').style('width'), 10) - vis.margin.left - vis.margin.right;
+		vis.height = 150 - vis.margin.top - vis.margin.bottom;
+
+		// SVG drawing area
+		vis.svg = d3.select("#stacked-area-chart").append("svg")
+			.attr("width", vis.width + vis.margin.left + vis.margin.right)
+			.attr("height", vis.height + vis.margin.top + vis.margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+
+		// axes
+		vis.xScale = d3.time.scale()
+			.range([0, vis.width]);
+
+		vis.yScale = d3.scale.linear();
+
+		vis.xAxis = d3.svg.axis()
+			.orient("bottom");
+
+		vis.yAxis = d3.svg.axis()
+			.orient("left")
+			.ticks(3)
+			.tickFormat(function(d) {
+				if (d === 0 || d < 10000) {
+					return d;
+				} else if (d < 1000000) {
+					return d / 1000 + "k";
+				} else {
+					return d / 1000000 + "M";
 				}
-				return arr;
-			})())
-			.range((function (d) {
-				arr = [];
-				for (key in PLANT_COLORS) {
-					arr.push(PLANT_COLORS[key]);
-				}
-				return arr;
-			})());
-
-		/*
-		 * Initialize visualization (static content, e.g. SVG area or axes)
-		 */
-
-			vis.margin = {top: 40, right: 0, bottom: 5, left: 60};
-
-			vis.width = 300 - vis.margin.left - vis.margin.right,
-				vis.height = 150 - vis.margin.top - vis.margin.bottom;
-
-			// SVG drawing area
-			vis.svg = d3.select("#stacked-area-chart").append("svg")
-				.attr("width", vis.width + vis.margin.left + vis.margin.right)
-				.attr("height", vis.height + vis.margin.top + vis.margin.bottom)
-				.append("g")
-				.attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
-
-			// Overlay with path clipping
-
-			vis.svg.append("defs").append("clipPath")
-				.attr("id", "clip")
-				.append("rect")
-				.attr("width", vis.width)
-				.attr("height", vis.height);
-
-
-			// (Filter, aggregate, modify data)
-
-			vis.updateVis();
-		}
-
-
-		this.updateVis = function() {
-			var vis = this;
-
-			var yearData = plants.getAttributeByYearType();
-
-			// Contains layered year attribute data
-			vis.layers = formatData();
-
-			// Format the data
-
-			function formatData() {
-
-				// Contains plant attributes by year
-				var formattedData = [];
-
-				// Format data
-				yearData.forEach(function (d, i) {
-					formattedData[i] = new Object();
-					formattedData[i].year = new Date(d.key);
-					for (val in d.value) {
-						formattedData[i][val] = d.value[val];
-					}
-				});
-
-				return formattedData;
-			}
-
-			// Scales and axes
-			vis.x = d3.time.scale()
-				.range([0, vis.width])
-				.domain(d3.extent(vis.layers, function (d) {
-					return d.year;
-				}));
-
-			vis.y = d3.scale.linear()
-				.range([vis.height, 0]);
-
-			vis.xAxis = d3.svg.axis()
-				.scale(vis.x)
-				.orient("bottom");
-
-			vis.yAxis = d3.svg.axis()
-				.scale(vis.y)
-				.orient("left")
-				.ticks(3)
-				.tickFormat(function(d) {
-					if (d === 0 || d < 10000) {
-						return d;
-					} else if (d < 1000000) {
-						return d / 1000 + "k";
-					} else {
-						return d / 1000000 + "M";
-					}
-				});
-
-			/*	vis.svg.append("g")
-			 .attr("class", "x-axis axis")
-			 .attr("transform", "translate(0," + vis.height + ")"); */
-
-			vis.svg.append("g")
-				.attr("class", "y-axis axis");
-
-			// Initialize stack layout
-
-			var stack = d3.layout.stack()
-				.values(function (d) {
-					return d.values;
-				});
-
-			var dataCategories = vis.colorScale.domain();
-
-			var transposedData = dataCategories.map(function (name) {
-				return {
-					name: name,
-					values: vis.layers.map(function (d) {
-						return {year: d.year, y: d[name]};
-					})
-				};
 			});
 
-			vis.stackedData = stack(transposedData);
-
-			// Stacked area layout
-			vis.area = d3.svg.area()
-				.interpolate("cardinal")
-				.x(function (d) {
-					return vis.x(d.year);
-				})
-				.y0(function (d) {
-					return vis.y(d.y0);
-				})
-				.y1(function (d) {
-					return vis.y(d.y0 + d.y);
-				});
-
-			// Update domain
-			// Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
-			vis.y.domain([0, d3.max(vis.stackedData, function (d) {
-				return d3.max(d.values, function (e) {
-					return e.y0 + e.y;
-				});
+		vis.svg.append("g")
+			.attr("class", "y-axis axis");
+		
+		// stacked area layout
+		vis.area = d3.svg.area()
+			.interpolate("cardinal")
+			.x(function (d) {
+				return vis.xScale(d.year);
 			})
-			]);
+			.y0(function (d) {
+				return vis.yScale(d.y0);
+			})
+			.y1(function (d) {
+				return vis.yScale(d.y0 + d.y);
+			});
 
-			// Tooltip placeholder
+		// tooltip placeholder
+		vis.div = d3.select("body").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
 
-			vis.div = d3.select("body").append("div")
-				.attr("class", "tooltip")
-				.style("opacity", 0);
+		// initialize stack layout
+		vis.stack = d3.layout.stack()
+			.values(function (d) {
+				return d.values;
+			});
 
-			// Draw the layers
-			vis.categories = vis.svg.selectAll(".area")
-				.data(vis.stackedData);
+		vis.updateVis();
+	}
 
-			vis.categories.enter().append("path")
-				.attr("class", "area")
-				.attr("d", function (d) {
-					return vis.area(d.values);
+
+	this.updateVis = function() {
+		var vis = this; 
+
+		// get the data based on which attribute is selected
+		var yearData = plants.getAttributeByYearType();
+
+		// format layered year attribute data
+		vis.layers = [];
+		yearData.forEach(function (d, i) {
+			vis.layers[i] = new Object();
+			vis.layers[i].year = new Date(d.key);
+			for (val in d.value) {
+				vis.layers[i][val] = d.value[val];
+			}
+		});
+
+		// update scales
+		vis.xScale
+			.domain(d3.extent(vis.layers, function (d) {
+				return d.year;
+			}));
+
+		vis.yScale
+			.range([vis.height, 0]);
+		
+		// transform the data
+		var dataCategories = Object.keys(PLANT_COLORS);
+
+		var transposedData = dataCategories.map(function (name) {
+			return {
+				name: name,
+				values: vis.layers.map(function (d) {
+					return {year: d.year, y: d[name]};
 				})
-				.on("mouseover", function (d) {
-					vis.div.transition()
-						.duration(200)
-						.style("opacity",.9);
-					vis.div.html(d.name)
-						.style("left", (d3.event.pageX) + "px")
-						.style("top", (d3.event.pageY - 28) + "px");
-				})
-				.on("mouseout", function (d) {
-					vis.div.transition()
-						.duration(200)
-						.style("opacity", 0);
-				});
+			};
+		});
 
-			vis.categories
-				.style("fill", function (d) {
-					return vis.colorScale(d.name);
-				})
-				.transition()
-				.duration(DURATION_LENGTH)
-				.attr("d", function (d) {
-					return vis.area(d.values);
-				})
+		vis.stackedData = vis.stack(transposedData);
 
-			// Update tooltip text
+		// Update domain
+		// Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
+		vis.yScale.domain([0, d3.max(vis.stackedData, function (d) {
+			return d3.max(d.values, function (e) {
+				return e.y0 + e.y;
+			});
+		})]);
 
-			vis.categories
-				.exit()
-				.remove();
+		// Draw the layers
+		vis.categories = vis.svg.selectAll(".area")
+			.data(vis.stackedData, function(d) {
+				return d.name;
+			});
 
+		vis.categories
+			.enter()
+			.append("path")
+			.attr("class", "area")
+			.style("fill", function (d) {
+				return PLANT_COLORS[d.name];
+			})
+			.on("mouseover", function (d) {
+				vis.div.transition()
+					.duration(200)
+					.style("opacity",.9);
+				vis.div.html(d.name)
+					.style("left", (d3.event.pageX) + "px")
+					.style("top", (d3.event.pageY - 28) + "px");
+			})
+			.on("mouseout", function (d) {
+				vis.div.transition()
+					.duration(200)
+					.style("opacity", 0);
+			});
 
-			// Call axis functions with the new domain
-			vis.svg.select(".x-axis").call(vis.xAxis);
-			vis.svg.select(".y-axis")
-				.transition()
-				.duration(DURATION_LENGTH)
-				.call(vis.yAxis);
-		}
+		vis.categories
+			.transition()
+			.duration(DURATION_LENGTH)
+			.attr("d", function (d) {
+				return vis.area(d.values);
+			});
+
+		vis.categories
+			.exit()
+			.remove();
+
+		// call axis functions with the new domains
+		vis.xAxis
+			.scale(vis.xScale);
+
+		vis.yAxis
+			.scale(vis.yScale);
+
+		vis.svg.select(".x-axis")
+			.call(vis.xAxis);
+
+		vis.svg.select(".y-axis")
+			.transition()
+			.duration(DURATION_LENGTH)
+			.call(vis.yAxis);
+	}
 
 	this.resizeVis = function() {
 		var vis = this;
@@ -796,17 +774,24 @@ function StackedAreaChart() {
 		// http://eyeseast.github.io/visible-data/2013/08/28/responsive-charts-with-d3/
 		vis.width = parseInt(d3.select("#stacked-area-chart").style("width"), 10) - vis.margin.left - vis.margin.right;
 
-		vis.x
+		vis.xScale
 			.range([0, vis.width]);
 
 		d3.select(vis.svg.node().parentNode) // svg element
 			.style('width', (vis.width + vis.margin.left + vis.margin.right) + 'px');
 
+		// reposition the area
+		vis.categories
+			.attr("d", function (d) {
+				return vis.area(d.values);
+			});
+
 		// redraw axis
 		vis.xAxis
-			.scale(vis.x);
+			.scale(vis.xScale);
 
-		vis.svg.select(".x-axis").call(vis.xAxis);
+		vis.svg.select(".x-axis")
+			.call(vis.xAxis);
 
 	}
 

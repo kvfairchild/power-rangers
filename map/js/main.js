@@ -55,8 +55,8 @@ $(document).ready(function(){
 function hide_preloader() {
 	// To stop the preloader
 	// To apply Fade Out Effect to the Preloader
-	$("#preloader").delay(3000).fadeOut(1000);
-	$("#main").delay(3000).css({"visibility": "visible"}).fadeIn(1000);
+	$("#preloader").delay(1000).fadeOut(1000);
+	$("#main").delay(1000).css({"visibility": "visible"}).fadeIn(1000);
 }
 
 // ***************************************
@@ -125,6 +125,7 @@ function resizeAllVis() {
 	capacity_chart.resizeVis();
 	year_built_chart.resizeVis();
 	area_chart.resizeVis();
+	year_chart.resizeVis();
 }
 
 d3.select(window).on('resize', resizeAllVis); 
