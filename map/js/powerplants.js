@@ -9,6 +9,7 @@ function PowerPlants(annual_data, plant_info) {
 		return p["plant_type"] != null;
 	}));
 	this.plant_info = plant_info;
+	this.yearVal;
 
 	// **********************************
 	// helpful variables
@@ -173,6 +174,10 @@ function PowerPlants(annual_data, plant_info) {
 		return this.data;
 	}
 
+	this.getYearVal = function() {
+		return this.yearVal;
+	}
+
 	// **********************************
 	// filter functions
 
@@ -196,6 +201,7 @@ function PowerPlants(annual_data, plant_info) {
 	// filter annual_data by current year
 	this.filterYear = function(year) {
 		this.year.filterExact(year);
+		this.yearVal = year;
 	}
 
 	// filter annual_data by current map view
