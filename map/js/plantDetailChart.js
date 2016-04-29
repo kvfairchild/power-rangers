@@ -16,7 +16,8 @@ function detail_draw(data)
 
 	    var detail_yScale = d3.scale.linear()
 	        .domain([0, d3.max(data, function(d){ return d.generation; })])
-	        .range([detail_h, 0]);
+	        .range([detail_h, 0])
+	        .nice();
 
 	    var detail_xAxis = d3.svg.axis()
 	        .scale(detail_xScale)
@@ -29,6 +30,7 @@ function detail_draw(data)
 	    var detail_yAxis = d3.svg.axis()
 	        .scale(detail_yScale)
 	        .orient("left")
+	        .ticks(5)
 	        .innerTickSize(-detail_w)
 	        .outerTickSize(0)
 	        .tickPadding(10);

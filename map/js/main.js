@@ -151,6 +151,5 @@ $("#sizeBy").change(function() {
 
 $("#selState").change(function() {
     plants.filterState(this.value);
-    if(this.value != "all") { map.zoomToState(this.value); } // changing the map view automatically updates all visualizations
-    else { updateAllVis("all"); }
+    map.zoomToState(this.value); // changing the map view automatically updates all visualizations
 });
