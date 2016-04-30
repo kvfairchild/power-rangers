@@ -70,6 +70,6 @@ function detail_draw(data)
 			.attr("x", (detail_w / 2))
 			.attr("y", 0 - (detail_m.top / 2))
 			.attr("text-anchor", "middle")
-			.text("Generation (MWh)");
+			.text("Generation (Million MWh)");
 	}
 }

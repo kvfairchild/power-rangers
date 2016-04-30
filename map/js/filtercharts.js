@@ -242,7 +242,7 @@ function PlantsDistributionChart(dimension) {
 
 		// create placeholder for the bars
 		vis.barsVisual = vis.svg.append("g")
-		    .attr("class", "bars")
+		    .attr("class", "bars");
 
 		// create x scale and x axis
 		var max_dimension_val = d3.max(vis.dimension_vals, function(d){
