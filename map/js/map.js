@@ -293,7 +293,7 @@ function Map() {
 			r = Math.sqrt(attr_val) / 5 * Math.pow(2, z);
 		}
 		else if(vis.attribute == "co2_emissions") {
-			r = Math.sqrt(attr_val) / 3 * Math.pow(2, z);
+			r = Math.sqrt(attr_val) / 4 * Math.pow(2, z);
 		}
 
 	    return r;
