@@ -2,7 +2,7 @@ function detail_draw(data)
 {
     d3.select("#tooltip-chart").selectAll("*").remove();
     if(data.length == 0) {
-    	d3.select("#tooltip-chart").html("No generation data for this plant");
+    	d3.select("#tooltip-chart").text("No generation data for this plant");
     }
     else {
 	    var detail_m = {top: 20, right: 30, bottom: 60, left: 50},
