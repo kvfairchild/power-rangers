@@ -209,15 +209,12 @@ img{
 	100% { -webkit-transform: scale(1); }
 }
 
-<<<<<<< Updated upstream
-=======
 @-moz-keyframes beat {
 	0% { transform: scale(1); }
 	50% { transform: scale(0.9); }
 	100% { transform: scale(1); }
 }
 
->>>>>>> Stashed changes
 .button:hover{
 	animation: beat 2s;
 	transform-origin: 50% 50%;
