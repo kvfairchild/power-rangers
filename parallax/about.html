@@ -51,8 +51,8 @@
 
         <p>This site was created to visualize the changing landscape of the U.S. power industry, from specific power plants to major trends.</p>
         <p>Cheap shale gas, declining renewable costs, emissions regulations, and new technologies are currently combining to rapidly reshape the power plant landscape in ways that have historically taken decades for this capital-intensive industry.</p>
-        <p>The complex and dynamic nature of the U.S. energy industry makes accurate and up-to-date data difficult to obtain in an easily consumable format.  Data is sparsely distributed across government and industry sponsored websites, often in the form of massive, dense spreadsheets.</p>
-        <p>The Power Plant Explorer was developed by <a href = "https://www.linkedin.com/in/joekhooker"> Joe Hooker</a>, <a href = "https://www.linkedin.com/in/katherinevgallagher"> Katherine Gallagher</a>, and <a href ="https://www.linkedin.com/in/james-gearheart-a3bbba84"> James Gearheart </a> using readily available data from the Energy Information Administration (EIA) and Environmental Protection Agency (EPA). This tool is primarily an interactive map that allows a user to visualize the changes occurring in the industry. Each power plant is mapped to a circle that is sized based a selected metric (capacity, generation, CO<sub>2</sub> emissions) and colored based on the plant fuel type (e.g. natural gas, coal, wind, etc.). You are able to filter by various criteria and can select a particular power plant to learn more about it.</p>
+        <p>The complex and dynamic nature of the U.S. energy industry makes accurate and up-to-date data difficult to obtain in an easily consumable format.  Data is sparsely distributed across government- and industry-sponsored websites, often in the form of massive, dense spreadsheets.</p>
+        <p>The Power Plant Explorer was developed by <a href = "https://www.linkedin.com/in/joekhooker"> Joe Hooker</a>, <a href = "https://www.linkedin.com/in/katherinevgallagher"> Katherine Gallagher</a>, and <a href ="https://www.linkedin.com/in/james-gearheart-a3bbba84"> James Gearheart </a> using public data from the Energy Information Administration (EIA) and the Environmental Protection Agency (EPA). This tool is primarily an interactive map that allows a user to visualize the changes occurring in the industry. Each power plant is mapped to a circle that is sized based on a selected metric (capacity, generation, or CO<sub>2</sub> emissions) and colored based on the power plant type (e.g. natural gas, coal, wind, etc.). A user is able to filter by various criteria and can select a particular power plant to learn more about it.</p>
         <p>All filters are dynamically linked so that all visual elements are automatically synced.  For example, if you select Massachusetts from the filter, then the map, bar chart, and area chart are all restricted to Massachusetts data.</p>
         <p><b>To read more about the development process, <a href = "../parallax/processbook.html">click here to visit our process book.</a></b></p><br>
 
@@ -75,33 +75,35 @@
             <a href="http://makeagif.com/y-1VvP" title="Energy Industry Fuel Types">
             <img src="http://i.makeagif.com/media/4-28-2016/y-1VvP.gif" alt="Energy Industry Fuel Types" class="about-gif" id="gif-1"></a><br>
 
-            <p>This analysis shows that in the early 1900s, the primary power for the U.S. was hydro and wood.  The oil and gas fuel types began to appear early in the 20<sup>th</sup> century while the coal sector grew rapidly in the middle of the 20<sup>th</sup> century.  The 1960s - 1970s began to see the emergence of nuclear power and by the 21<sup>st</sup> century, the newly constructed power plants were primarily gas.  The current investments in power plant construction are dominated by renewable energy sources such as wind and and emerging solar market.</p>
+            <p>This analysis shows that the oldest plants that are still operating today are primarily hydroelectric plants. In fact, the largest plant in the entire US, the Grand Coulee dam, was built in 1941 and provides more than 7 GW of hydroelectric capacity. In the middle of the twentieth century, many coal plants were built and in the last quarter of the century is when almost all of the nuclear plants were built. Since 2000, gas has been the dominant power plant type to be built, and in the last decade, renewables such as wind and solar have grown rapidly in concert with gas capacity.</p>
 
         <h3>Capacity and location</h3>
 
-            <p>Our next analysis focused on the distribution of power plant based on energy capacity.  By selecting a range of power capacity and dragging it across the available time period, the user can see the distribution of plant size across the U.S.</p>
+            <p>Our next analysis focuses on the distribution of power plants based on energy capacity.  By selecting a range of power capacity and dragging it across the available time period, the user can see the distribution of plant sizes across the U.S.</p>
 
             <a href="http://makeagif.com/2_TaRF" title="Power Plant Capacity"><img src="http://i.makeagif.com/media/4-28-2016/2_TaRF.gif" alt="Power Plant Capacity" class="about-gif" id="gif-2"></a><br>
-            <p>This analysis shows that nearly all states have a numerous smaller capacity power plants to meet regional power consumption demands.  As the power capacity limits are increased, the number of power plants decrease and their location is centered on the more populated regions.  The largest power plants are located near major cities.</p>
+            
+            <p>This analysis reveals a few trends. First, the nuclear plants are generally very large. This makes sense because there are significant economies to scale to building nuclear plants, such as permitting, safety measures, and operations centers. Second, Florida has several very large natural gas plants. Third, the largest power plants are generally located right next to major cities.</p>
 
         <h3>CO<sub>2</sub> emissions over time</h3>
 
           <p>Another type of analysis that can be performed is to look at the level of CO<sub>2</sub> emissions over time.  In this analysis, we begin by selecting the CO<sub>2</sub> emissions metric from the “Size by” filter and selecting a beginning range from the “Year Built” slider.</p>
 
             <a href="http://makeagif.com/z-OWMH" title="CO2 Emissions by Year the Plant was Built"><img src="http://i.makeagif.com/media/4-28-2016/z-OWMH.gif" alt="CO2 Emissions by Year the Plant was Built" class="about-gif" id="gif-3"></a><br>
-            <p>By increasing the range of the Year Built slider, we can see how CO<sub>2</sub> emissions have increased as new power plants have been built and we can see that coal plants have the largest impact on CO<sub>2</sub> emissions.</p>
+            
+            <p>By increasing the range of the Year Built slider, we can see that most of the CO<sub>2</sub> emissions come from old coal plants. Natural gas plant capacity has increase significantly after 2000, but the CO<sub>2</sub> emissions from gas plants are significantly less than that of coal plants. However, one must also consider the methane emissions that are emitted due to upstream processes in the natural gas industry to understand its total impact on climate change.</p>
 
         <h3>Further Analysis</h3>
 
-            <p>Here are some ideas for further questions you can use the Power Plant Explorer to answer:</p>
+            <p>Here are some additional questions a user can answer with the Power Plant Explorer:</p>
             <ul>
                 <li>What types of power plants are located in the U.S. (e.g. nuclear, solar, etc…), how big are they, and where are they located? </li>
-                <li>Which types of power plants are responsible for the most CO<sub>2</sub> emissions?</li>
+                <li>Which types of power plants don't emit CO<sub>2</sub>?</li>
                 <li>What is the historic trend for energy production? Are renewables growing? Are coal plants retiring?</li>
                 <li>What is the power plant mix for a particular state?</li>
                 <li>How has a power plant’s generation changed over time?</li>
             </ul>
-            <p>Our hope is that the Power Plant Explorer makes U.S. power industry data accessible for everyone to easily discover this vital part of our society.</p>
+            <p>Our hope is that the Power Plant Explorer makes U.S. power industry data accessible for everyone. After all, electricity is one of the most vital components of our modern society.</p>
     </div>
 
 </body>
